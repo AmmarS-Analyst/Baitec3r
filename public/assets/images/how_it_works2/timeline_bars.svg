@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 601.18 873.64">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #5fd0df;
+      }
+
+      .cls-2 {
+        fill: url(#New_Gradient_Swatch_2);
+        opacity: .77;
+      }
+
+      .cls-3 {
+        fill: #00bed6;
+      }
+
+      .cls-4 {
+        fill: #ff595a;
+      }
+
+      .cls-5 {
+        fill: url(#linear-gradient);
+        opacity: .4;
+      }
+
+      .cls-6 {
+        fill: #00abc8;
+      }
+    </style>
+    <linearGradient id="linear-gradient" x1="497.94" y1="520.77" x2="614.38" y2="565.48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="New_Gradient_Swatch_2" data-name="New Gradient Swatch 2" x1="268.97" y1="492.93" x2="5.42" y2="354.14" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#000"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="Design">
+    <g>
+      <g>
+        <polygon class="cls-4" points="425.94 526.77 601.18 526.77 601.18 355.15 425.94 179.9 425.94 526.77"/>
+        <polygon class="cls-4" points="601.18 526.77 425.94 526.77 425.94 698.4 601.18 873.64 601.18 526.77"/>
+        <polygon class="cls-5" points="601.18 355.15 425.94 179.9 425.94 698.4 601.18 873.64 601.18 355.15"/>
+      </g>
+      <g>
+        <polygon class="cls-3" points="0 595.78 190.06 406.25 190.06 206.89 0 396.42 0 595.78"/>
+        <polygon class="cls-6" points="0 802.67 190.06 613.14 190.06 413.78 0 603.3 0 802.67"/>
+        <polygon class="cls-1" points="0 388.89 190.06 199.36 190.06 0 0 189.53 0 388.89"/>
+        <polygon class="cls-2" points="190.06 0 190.06 613.14 0 802.67 0 189.53 190.06 0"/>
+      </g>
+    </g>
+  </g>
+</svg>

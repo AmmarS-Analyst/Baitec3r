@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Alexandria';
+  src: url('/assets/Fonts/Alexandria-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MyriadPro';
+  src: url('/assets/Fonts/MyriadPro-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MyriadPro';
+  src: url('/assets/Fonts/MyriadPro-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --color-baitech-light-blue: #84DADE;
+  --color-baitech-teal: #1ECAD3;
+  --color-baitech-darker-blue: #0099A8;
+  --color-baitech-red: #FF4438;
+  --color-baitech-navy: #002B49;
+
+  --font-sans: 'Alexandria', 'MyriadPro', system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.6s ease-out forwards;
+  --animate-glow-pulse: glow-pulse 3s ease-in-out infinite;
+  --animate-counter: counter-up 2s ease-out forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3)); }
+  50% { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.7)); }
+}
+
+@keyframes counter-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Alexandria', 'MyriadPro', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Button flair - cursor-following fill effect */
+.button--stroke {
+  position: relative;
+  overflow: hidden;
+}
+
+.button--stroke .button__flair {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1),
+              width 0s,
+              height 0s;
+  background-color: #FF4438;
+}
+
+.button--stroke .button__label {
+  position: relative;
+  z-index: 1;
+  transition: color 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn-navy .button__flair {
+  background-color: #FF4438;
+}
+
+.btn-white .button__flair {
+  background-color: #002B49;
+}
+
+.btn-white:hover .button__label {
+  color: #FFFFFF;
+}
