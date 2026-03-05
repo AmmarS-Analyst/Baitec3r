@@ -270,30 +270,30 @@ const ManageBuilding: FC = () => {
         }
 
         @keyframes wordSeqCyan {
-          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          5%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          12%  { color: #84dade; -webkit-text-fill-color: #84dade; }
-          22%  { color: #84dade; -webkit-text-fill-color: #84dade; }
-          30%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          2%   { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          14%  { color: #84dade; -webkit-text-fill-color: #84dade; text-shadow: 0 0 18px rgba(132,218,222,0.45), 0 0 36px rgba(132,218,222,0.2); }
+          22%  { color: #84dade; -webkit-text-fill-color: #84dade; text-shadow: 0 0 18px rgba(132,218,222,0.45), 0 0 36px rgba(132,218,222,0.2); }
+          32%  { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
         }
 
         @keyframes wordSeqRed {
-          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          33%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          42%  { color: #ff4438; -webkit-text-fill-color: #ff4438; }
-          52%  { color: #ff4438; -webkit-text-fill-color: #ff4438; }
-          62%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          30%  { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          42%  { color: #ff4438; -webkit-text-fill-color: #ff4438; text-shadow: 0 0 18px rgba(255,68,56,0.45), 0 0 36px rgba(255,68,56,0.2); }
+          50%  { color: #ff4438; -webkit-text-fill-color: #ff4438; text-shadow: 0 0 18px rgba(255,68,56,0.45), 0 0 36px rgba(255,68,56,0.2); }
+          62%  { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
         }
 
         @keyframes wordSeqCyan3 {
-          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          65%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          74%  { color: #84dade; -webkit-text-fill-color: #84dade; }
-          84%  { color: #84dade; -webkit-text-fill-color: #84dade; }
-          93%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          62%  { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          74%  { color: #84dade; -webkit-text-fill-color: #84dade; text-shadow: 0 0 18px rgba(132,218,222,0.45), 0 0 36px rgba(132,218,222,0.2); }
+          82%  { color: #84dade; -webkit-text-fill-color: #84dade; text-shadow: 0 0 18px rgba(132,218,222,0.45), 0 0 36px rgba(132,218,222,0.2); }
+          92%  { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
+          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; text-shadow: 0 0 12px rgba(255,255,255,0.12); }
         }
 
       `}</style>
