@@ -145,7 +145,7 @@ const ManageBuilding: FC = () => {
         .manage-outline-base-red {
           fill: none;
           stroke-width: 2.5;
-          stroke: rgba(255,255,255,0.16);
+          stroke: rgba(255, 255, 255, 0);
         }
 
         .manage-outline-snake-tail,
@@ -166,9 +166,9 @@ const ManageBuilding: FC = () => {
         }
 
         .manage-outline-snake-blue-tail {
-          stroke: rgba(132,218,222,0.6);
-          filter: drop-shadow(0 0 14px rgba(132,218,222,1));
-          animation-delay: -0.22s;
+          stroke: rgba(255,255,255,0.96);
+          filter: drop-shadow(0 0 16px rgba(255,255,255,1));
+          animation-delay: -0.55s;
         }
 
         .manage-outline-snake-blue-head {
@@ -177,15 +177,17 @@ const ManageBuilding: FC = () => {
         }
 
         .manage-outline-snake-red-tail {
-          stroke: rgba(255,68,56,0.58);
-          filter: drop-shadow(0 0 14px rgba(255,68,56,1));
+          stroke: rgba(255,255,255,0.96); 
+          filter: drop-shadow(0 0 16px rgba(255,255,255,1));
           animation-delay: 1.45s;
+          stroke-dasharray: 260 2200; 
         }
 
         .manage-outline-snake-red-head {
           stroke: rgba(255,255,255,1);
           filter: drop-shadow(0 0 16px rgba(255,255,255,1));
           animation-delay: 1.66s;
+          stroke-dasharray: 96 2200; 
         }
 
         @keyframes manage-word-sweep-ltr {
