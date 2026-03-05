@@ -1,19 +1,6 @@
-import { useEffect, useState, type FC } from "react";
-
-const words = ["BUILDING", "HOME", "APARTMENT"];
+import type { FC } from "react";
 
 const ManageBuilding: FC = () => {
-  const [currentWord, setCurrentWord] = useState(0);
-  const [wordDirection, setWordDirection] = useState<"left" | "right">("left");
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentWord((prev) => (prev + 1) % words.length);
-      setWordDirection((prev) => (prev === "left" ? "right" : "left"));
-    }, 3000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <section id="manage-building" className="relative overflow-hidden" style={{ backgroundColor: "#002B49", padding: "clamp(2rem, 3.4vw, 3rem) 0 0" }}>
       <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-14">
@@ -38,20 +25,15 @@ const ManageBuilding: FC = () => {
               </span>
 
               <span className="relative block mt-2 text-left" style={{ minHeight: "clamp(44px, 5.6vw, 62px)" }}>
-                <span
-                  key={`${currentWord}-${wordDirection}`}
-                  className={`inline-block font-extrabold ${wordDirection === "left" ? "manage-word-sweep-ltr" : "manage-word-sweep-rtl"}`}
-                  style={{
-                    color: "#FFFFFF",
-                    textShadow: "0 0 16px rgba(132,218,222,0.45), 0 0 30px rgba(255,255,255,0.22)",
-                    letterSpacing: "0.3px",
-                  }}
-                >
-                  {words[currentWord]}
+                <span className="inline-block font-extrabold" style={{ letterSpacing: "0.3px" }}>
+                  <span className="word-seq word-seq-1">BUILDING,</span>{" "}
+                  <span className="word-seq word-seq-2">HOME,</span>{" "}
+                  <span style={{ color: "#FFFFFF" }}>OR</span>{" "}
+                  <span className="word-seq word-seq-3">APARTMENT</span>
                 </span>
               </span>
 
-              <span className="block mt-2 text-left" style={{ color: "rgba(255,255,255,0.85)", fontWeight: 300, fontSize: "0.84em", fontStyle: "italic" }}>
+              <span className="block mt-2 text-left" style={{ color: "rgba(255,255,255,0.85)", fontWeight: 300, fontSize: "0.84em" }}>
                 with ease
               </span>
             </h2>
@@ -103,25 +85,106 @@ const ManageBuilding: FC = () => {
       </div>
 
       <style>{`
-        .manage-word-sweep-ltr {
-          animation: manage-word-sweep-ltr 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+        .word-seq {
+          color: #ffffff;
+          -webkit-text-fill-color: #ffffff;
         }
 
-        .manage-word-sweep-rtl {
-          animation: manage-word-sweep-rtl 0.9s cubic-bezier(0.23, 1, 0.32, 1) both;
+        .word-seq-1 {
+          animation: wordSeqCyan 7.2s linear infinite;
         }
 
+        .word-seq-2 {
+          animation: wordSeqRed 7.2s linear infinite;
+        }
+
+        .word-seq-3 {
+          animation: wordSeqCyan3 7.2s linear infinite;
+        }
+
+        .manage-text-card {
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Vertical shine (right) - tapered with bright core */
+        .manage-text-card::before {
+          content: "";
+          position: absolute;
+          top: 46%;
+          right: -0.6px;
+          width: 2.4px;
+          height: 28%;
+          border-radius: 999px;
+          background:
+            radial-gradient(
+              ellipse at center,
+              rgba(255,255,255,1) 0%,
+              rgba(255,255,255,0.95) 18%,
+              rgba(255,255,255,0.38) 45%,
+              rgba(255,255,255,0) 76%
+            ),
+            linear-gradient(
+              180deg,
+              rgba(255,255,255,0) 0%,
+              rgba(255,255,255,0.95) 24%,
+              rgba(255,255,255,0.95) 76%,
+              rgba(255,255,255,0) 100%
+            );
+          box-shadow:
+            0 0 10px rgba(255,255,255,0.52),
+            0 0 16px rgba(255,255,255,0.28);
+          filter: blur(0.15px);
+          opacity: 0.98;
+          transform-origin: center;
+          pointer-events: none;
+          z-index: 5;
+        }
+
+        /* Horizontal shine (bottom) - tapered with bright core */
+        .manage-text-card::after {
+          content: "";
+          position: absolute;
+          bottom: -0.6px;
+          right: 6%;
+          width: 42%;
+          height: 2.4px;
+          border-radius: 999px;
+          background:
+            radial-gradient(
+              ellipse at center,
+              rgba(255,255,255,1) 0%,
+              rgba(255,255,255,0.95) 20%,
+              rgba(255,255,255,0.36) 46%,
+              rgba(255,255,255,0) 76%
+            ),
+            linear-gradient(
+              90deg,
+              rgba(255,255,255,0) 0%,
+              rgba(255,255,255,0.95) 24%,
+              rgba(255,255,255,0.95) 76%,
+              rgba(255,255,255,0) 100%
+            );
+          box-shadow:
+            0 0 10px rgba(255,255,255,0.5),
+            0 0 16px rgba(255,255,255,0.26);
+          filter: blur(0.15px);
+          opacity: 0.97;
+          transform-origin: center;
+          pointer-events: none;
+          z-index: 5;
+        }
         .manage-card-radius-glow {
           position: absolute;
           inset: 0;
           border-radius: 1rem;
           pointer-events: none;
-          border: 1px solid rgba(132,218,222,0.2);
+          border: 1px solid rgba(255,255,255,0.12);
           box-shadow:
-            0 0 8px rgba(132,218,222,0.2),
-            0 0 18px rgba(132,218,222,0.12),
+            0 0 8px rgba(132,218,222,0.14),
+            0 0 18px rgba(132,218,222,0.1),
             inset 0 0 8px rgba(132,218,222,0.08);
-          animation: manage-outline-breathe 3.8s ease-in-out infinite;
+          animation: manage-outline-breathe 4.4s ease-in-out infinite;
           z-index: 1;
         }
 
@@ -190,32 +253,6 @@ const ManageBuilding: FC = () => {
           stroke-dasharray: 96 2200; 
         }
 
-        @keyframes manage-word-sweep-ltr {
-          0% {
-            opacity: 0;
-            transform: translateX(-18px);
-            filter: blur(1px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateX(0);
-            filter: blur(0);
-          }
-        }
-
-        @keyframes manage-word-sweep-rtl {
-          0% {
-            opacity: 0;
-            transform: translateX(18px);
-            filter: blur(1px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateX(0);
-            filter: blur(0);
-          }
-        }
-
         @keyframes manage-snake-outline-run {
           0% { stroke-dashoffset: 0; opacity: 0; }
           8% { opacity: 1; }
@@ -230,6 +267,33 @@ const ManageBuilding: FC = () => {
           50% {
             opacity: 0.95;
           }
+        }
+
+        @keyframes wordSeqCyan {
+          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          5%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          12%  { color: #84dade; -webkit-text-fill-color: #84dade; }
+          22%  { color: #84dade; -webkit-text-fill-color: #84dade; }
+          30%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+        }
+
+        @keyframes wordSeqRed {
+          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          33%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          42%  { color: #ff4438; -webkit-text-fill-color: #ff4438; }
+          52%  { color: #ff4438; -webkit-text-fill-color: #ff4438; }
+          62%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+        }
+
+        @keyframes wordSeqCyan3 {
+          0%   { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          65%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          74%  { color: #84dade; -webkit-text-fill-color: #84dade; }
+          84%  { color: #84dade; -webkit-text-fill-color: #84dade; }
+          93%  { color: #ffffff; -webkit-text-fill-color: #ffffff; }
+          100% { color: #ffffff; -webkit-text-fill-color: #ffffff; }
         }
 
       `}</style>
