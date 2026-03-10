@@ -1,10 +1,11 @@
 import { useState, type FC } from "react";
-import newBasem from "../../fAssets/SVG/newbasim.svg";
-import rentTrackingScreen from "../../fAssets/SVG/rent_tracking.svg";
-import maintenanceManagementScreen from "../../fAssets/SVG/maintenance_management.svg";
-import tenantInformationScreen from "../../fAssets/SVG/Tenant information.svg";
-import unitStatusUpdateScreen from "../../fAssets/SVG/Unit status update.svg";
-import instantUpdatesScreen from "../../fAssets/SVG/Instant_updates.svg";
+import basemSvg from "../../fAssets/Basem.svg";
+import rentTrackingSvg from "../../fAssets/rent tracking.svg";
+import maintenanceSvg from "../../fAssets/maintenence.svg";
+import tenantInfoSvg from "../../fAssets/tenant information.svg";
+import unitStatusSvg from "../../fAssets/unit status.svg";
+import instantSvg from "../../fAssets/Instant.svg";
+import bgBarsSvg from "../../fAssets/bg_bars.svg";
 
 const slides = [
   { title: "Let Basem handle it", description: "Your Ai property assistant on Whatsapp. Available 24/7." },
@@ -16,12 +17,12 @@ const slides = [
 ];
 
 const slideVisuals = [
-  newBasem,
-  rentTrackingScreen,
-  maintenanceManagementScreen,
-  tenantInformationScreen,
-  unitStatusUpdateScreen,
-  instantUpdatesScreen,
+  basemSvg,
+  rentTrackingSvg,
+  maintenanceSvg,
+  tenantInfoSvg,
+  unitStatusSvg,
+  instantSvg,
 ];
 
 const Basem: FC = () => {
@@ -57,120 +58,361 @@ const Basem: FC = () => {
   };
 
   return (
-    <section id="basem" className="relative flex items-stretch overflow-hidden" style={{ height: "min(900px, calc(100vh - 80px))", maxHeight: "900px", backgroundColor: "#ffffff", padding: 0 }}>
-      {/* Navy background box */}
-      <div className="absolute right-0 bottom-0" style={{ top: "clamp(10rem, 25vh, 21rem)", left: "clamp(15%, 20vw, 20%)", backgroundColor: "#002B49", zIndex: 0 }} />
+    <section
+      id="basem"
+      className="relative flex flex-col lg:flex-row items-stretch justify-start overflow-hidden min-h-[60vh] lg:min-h-[90vh] bg-white basem-single-image p-0 m-0 pl-0 ml-0"
+      style={{ paddingLeft: 0, marginLeft: 0 }}
+    >
+      {/* Navy background - mobile */}
+      <div
+        className="absolute right-0 bottom-0 bg-[#002B49] z-0 lg:hidden"
+        style={{ top: "clamp(8rem, 20vh, 12rem)", left: 0 }}
+      />
+      {/* Navy background - desktop */}
+      <div
+        className="absolute right-0 bottom-0 bg-[#002B49] z-0 hidden lg:block"
+        style={{
+          top: "clamp(10rem, 25vh, 21rem)",
+          left: "clamp(15%, 20vw, 20%)",
+        }}
+      />
 
-      <div className="w-full flex flex-row items-stretch relative z-[1]" style={{ flex: "1 1 auto" }}>
-        {/* Left Column - Basem Image + Bars */}
-        <div className="basem-left-column relative flex items-end justify-end overflow-visible" style={{ flex: "1 1 50%", minHeight: "100%", paddingRight: "15rem" }}>
-          {/* Desktop Bars */}
-          <div className="desktop-bars absolute inset-0 z-[1] pointer-events-none overflow-visible">
-            <img src="/assets/images/basem/redbar_left.webp" alt="" className="absolute pointer-events-none" style={{ top: "30em", left: "30em", width: "20em", height: "auto", zIndex: 1 }} />
-            <img src="/assets/images/basem/bluebar_left.webp" alt="" className="absolute pointer-events-none overflow-visible" style={{ top: "1em", left: "0", width: "25em", height: "auto", zIndex: 1 }} />
+      <div className="w-full flex flex-col lg:flex-row items-stretch justify-center lg:justify-start flex-1 min-h-0 min-w-0 gap-0 relative z-10 p-0 m-0 pl-0 ml-0">
+        {/* Single image per slide: centred on mobile, flush left on desktop. No bars. */}
+        <div
+          className="basem-left-column relative flex flex-1 min-w-0 min-h-0 flex-col w-full lg:w-1/2 order-1 lg:order-1 overflow-hidden items-start justify-center lg:justify-start lg:items-start self-stretch p-0 m-0 pl-0 ml-0"
+          style={{ minHeight: "clamp(280px, 45vh, 520px)", paddingLeft: 0, marginLeft: 0 }}
+        >
+          {/* Desktop Bars - hidden (single image layout for all slides) */}
+          <div className="desktop-bars absolute inset-0 z-0 pointer-events-none items-end justify-start hidden">
+            <img
+              src="/assets/images/basem/redbar_left.webp"
+              alt=""
+              className="absolute h-auto pointer-events-none object-contain object-left-bottom max-w-full"
+              style={{
+                width: "clamp(16rem, 18vw, 20rem)",
+                top: "clamp(12rem, 28vh, 22rem)",
+                left: "clamp(12rem, 20vw, 24rem)",
+              }}
+            />
+            <img
+              src="/assets/images/basem/bluebar_left.webp"
+              alt=""
+              className="absolute h-auto pointer-events-none object-contain object-left-bottom max-w-full"
+              style={{
+                width: "clamp(20rem, 22vw, 25rem)",
+                top: "1rem",
+                left: 0,
+              }}
+            />
           </div>
 
-          {/* Mobile Bars */}
-          <div className="mobile-bars hidden absolute items-end justify-center gap-4 pointer-events-none" style={{ bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 1 }}>
-            <img src="/assets/images/basem/basem_rb.svg" alt="" className="pointer-events-none" style={{ height: "400px", width: "auto" }} />
-            <img src="/assets/images/basem/Basem_r.svg" alt="" className="pointer-events-none" style={{ height: "350px", width: "auto", marginBottom: "0.1rem" }} />
+          {/* Mobile Bars - hidden (single image layout for all slides) */}
+          <div className="mobile-bars absolute inset-0 z-0 pointer-events-none items-end justify-center gap-[clamp(0.5rem, 2vw, 1rem)] hidden">
+            <img
+              src="/assets/images/basem/basem_rb.svg"
+              alt=""
+              className="w-auto pointer-events-none object-contain object-bottom flex-shrink-0"
+              style={{ height: "clamp(260px, 44vh, 420px)" }}
+            />
+            <img
+              src="/assets/images/basem/Basem_r.svg"
+              alt=""
+              className="w-auto pointer-events-none object-contain object-bottom flex-shrink-0"
+              style={{ height: "clamp(220px, 38vh, 380px)" }}
+            />
           </div>
 
-          {/* Basem Image */}
+          {/* Static bg bars – same position as slide images, always behind, does not change with slides */}
+          <div className="absolute inset-0 z-[1] flex items-end justify-center lg:justify-start pointer-events-none">
+            <img
+              src={bgBarsSvg}
+              alt=""
+              className="basem-bg-bars w-auto max-w-full object-contain object-bottom max-h-[clamp(200px,40vh,320px)] lg:max-h-[min(920px,calc(100vh-80px))]"
+            />
+          </div>
+
+          {/* Slide image - one per slide, centred on mob, start on desktop */}
           <img
             src={slideVisuals[currentSlide]}
             alt={isBasemSlide ? "Basem" : slides[currentSlide].title}
-            className="basem-image relative z-[2]"
-            style={{
-              width: "auto",
-              height: isBasemSlide ? "min(860px, calc(100vh - 120px))" : "min(760px, calc(100vh - 190px))",
-              maxHeight: isBasemSlide ? "min(860px, calc(100vh - 120px))" : "min(760px, calc(100vh - 190px))",
-              objectFit: "contain",
-              objectPosition: "bottom right",
-              alignSelf: "flex-end",
-              right: "2em",
-              opacity: isTransitioning && isBoundaryVisualTransition ? 0 : 1,
-              transform: isTransitioning && isBoundaryVisualTransition
-                ? "translateY(10px) scale(0.985)"
-                : (isBasemSlide ? "translateY(0) scale(1)" : "translateY(0.9rem) scale(1)"),
-              transition: "opacity 0.35s ease, transform 0.35s ease, max-height 0.35s ease, height 0.35s ease",
-            }}
+            className={`basem-image relative z-10 w-auto max-w-full object-contain object-bottom flex-shrink-0 transform-gpu transition-all duration-[350ms] ease-in-out ${
+              isTransitioning && isBoundaryVisualTransition ? "opacity-0 translate-y-2 scale-[0.985]" : "opacity-100 scale-100"
+            } ${!isBasemSlide ? "lg:translate-y-4" : ""} max-h-[clamp(200px,40vh,320px)] lg:max-h-[min(920px,calc(100vh-80px))]`}
           />
         </div>
 
-        {/* Right Column - Slider */}
-        <div className="flex flex-col justify-center items-center relative" style={{ flex: "1 1 50%", minHeight: "100%" }}>
-          <div className="relative w-full flex flex-col items-center gap-6" style={{ maxWidth: "90em", transform: "translateX(-10em) translateY(5em)" }}>
-            {/* Text Box */}
-            <div className="relative w-full flex flex-col" style={{ backgroundColor: "transparent", border: "3px solid #ffffff", borderRadius: "1.5rem", padding: "3rem 2.5rem 5.5rem 2.5rem", minHeight: "400px" }}>
+        {/* Bottom on mobile, Right on desktop: Slider. Horizontal start, vertical centre. */}
+        <div className="flex flex-1 min-w-0 flex-col items-start justify-center w-full lg:w-1/2 order-2 lg:order-2 relative z-10">
+          <div
+            className="relative w-full flex flex-col items-start justify-center gap-4 lg:gap-6 max-w-[90rem] min-w-0 text-left basem-slider-inner"
+            style={{
+              marginRight: "clamp(1rem, 2vw, 2rem)",
+            }}
+          >
+            {/* Text Box – margin from top and right so it shows completely */}
+            <div
+              className="relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0"
+              style={{
+                minHeight: "clamp(260px, 42vh, 400px)",
+                paddingTop: "clamp(2rem, 3vw, 3rem)",
+                paddingLeft: "clamp(1.5rem, 2.5vw, 2.5rem)",
+                paddingRight: "clamp(1.5rem, 2.5vw, 2.5rem)",
+                paddingBottom: "clamp(5rem, 8vw, 8rem)",
+              }}
+            >
               <h2
-                className="transition-all duration-300"
+                className={`text-[#84DADE] font-bold leading-tight flex-shrink-0 transition-all duration-300 ${
+                  isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+                }`}
                 style={{
-                  fontSize: "clamp(36px, 4vw, 52px)", fontWeight: 700, color: "#84DADE", marginBottom: "1.25rem", lineHeight: 1.2,
-                  minHeight: "clamp(60px, 8vw, 80px)",
-                  opacity: isTransitioning ? 0 : 1, transform: isTransitioning ? "translateY(10px)" : "translateY(0)",
+                  fontSize: "clamp(1.25rem, 4vw, 3.25rem)",
+                  marginBottom: "clamp(0.5rem, 1.25vw, 1.25rem)",
+                  minHeight: "clamp(2.5rem, 8vw, 5rem)",
                 }}
               >
                 {slides[currentSlide].title}
               </h2>
               <p
-                className="transition-all duration-300 flex-1"
-                style={{
-                  fontSize: "clamp(18px, 1.9vw, 26px)", fontWeight: 400, color: "#FFFFFF", lineHeight: 1.7,
-                  opacity: isTransitioning ? 0 : 1, transform: isTransitioning ? "translateY(10px)" : "translateY(0)",
-                  transitionDelay: "0.05s",
-                }}
+                className={`flex-1 min-h-0 text-white font-normal leading-[1.7] transition-all duration-300 delay-75 ${
+                  isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+                }`}
+                style={{ fontSize: "clamp(0.875rem, 1.9vw, 1.625rem)" }}
               >
                 {slides[currentSlide].description}
               </p>
 
-              {/* Arrows */}
-              <div className="absolute flex items-center justify-between" style={{ bottom: "1.75rem", left: "2.5rem", right: "2.5rem" }}>
+              {/* Arrows - clamp sizes, no padding on container */}
+              <div
+                className="absolute flex items-center justify-between flex-shrink-0"
+                style={{
+                  bottom: "clamp(1rem, 1.5vw, 1.75rem)",
+                  left: "clamp(1rem, 2vw, 2.5rem)",
+                  right: "clamp(1rem, 2vw, 2.5rem)",
+                }}
+              >
                 {currentSlide > 0 ? (
-                  <div className="rounded-full p-[0.3rem] flex items-center justify-center transition-all duration-300" style={{ width: "4.5rem", height: "4.5rem", background: "linear-gradient(135deg, #84DADE 0%, #002B49 100%)", opacity: isTransitioning ? 0.5 : 1 }}>
-                    <button onClick={handlePrev} className="w-full h-full rounded-full border-none bg-white cursor-pointer flex items-center justify-center relative transition-all duration-300 hover:scale-105" style={{ color: "#002B49", fontSize: "2.75rem", boxShadow: "0 0 0 2px rgba(0,43,73,0.3), 0 2px 8px rgba(0,0,0,0.15)" }}>
-                      <span className="absolute" style={{ top: "50%", left: "50%", transform: "translate(-50%, calc(-50% - 2px))", lineHeight: 1 }}>←</span>
+                  <div
+                    className={`rounded-full p-[0.2rem] flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-[#84DADE] to-[#002B49] transition-opacity duration-300 ${
+                      isTransitioning ? "opacity-50" : "opacity-100"
+                    }`}
+                    style={{ width: "clamp(3rem, 4.5vw, 4.5rem)", height: "clamp(3rem, 4.5vw, 4.5rem)" }}
+                  >
+                    <button
+                      type="button"
+                      onClick={handlePrev}
+                      className="w-full h-full rounded-full border-0 bg-white cursor-pointer flex items-center justify-center relative transition-transform duration-300 hover:scale-105 text-[#002B49] shadow-[0_0_0_2px_rgba(0,43,73,0.3),0_2px_8px_rgba(0,0,0,0.15)] flex-shrink-0"
+                      style={{ fontSize: "clamp(1.5rem, 2.75vw, 2.75rem)" }}
+                    >
+                      <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+2px)] leading-none">←</span>
                     </button>
                   </div>
-                ) : <div style={{ width: "4.5rem" }} />}
-
-                <div className="rounded-full p-[0.3rem] flex items-center justify-center transition-all duration-300" style={{ width: "4.5rem", height: "4.5rem", background: "linear-gradient(135deg, #84DADE 0%, #002B49 100%)", opacity: isTransitioning ? 0.5 : 1 }}>
-                  <button onClick={handleNext} className="w-full h-full rounded-full border-none bg-white cursor-pointer flex items-center justify-center relative transition-all duration-300 hover:scale-105" style={{ color: "#002B49", fontSize: "2.75rem", boxShadow: "0 0 0 2px rgba(0,43,73,0.3), 0 2px 8px rgba(0,0,0,0.15)" }}>
-                    <span className="absolute" style={{ top: "50%", left: "50%", transform: "translate(-50%, calc(-50% - 2px))", lineHeight: 1 }}>→</span>
+                ) : (
+                  <div style={{ width: "clamp(3rem, 4.5vw, 4.5rem)" }} />
+                )}
+                <div
+                  className={`rounded-full p-[0.2rem] flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-[#84DADE] to-[#002B49] transition-opacity duration-300 ${
+                    isTransitioning ? "opacity-50" : "opacity-100"
+                  }`}
+                  style={{ width: "clamp(3rem, 4.5vw, 4.5rem)", height: "clamp(3rem, 4.5vw, 4.5rem)" }}
+                >
+                  <button
+                    type="button"
+                    onClick={handleNext}
+                    className="w-full h-full rounded-full border-0 bg-white cursor-pointer flex items-center justify-center relative transition-transform duration-300 hover:scale-105 text-[#002B49] shadow-[0_0_0_2px_rgba(0,43,73,0.3),0_2px_8px_rgba(0,0,0,0.15)] flex-shrink-0"
+                    style={{ fontSize: "clamp(1.5rem, 2.75vw, 2.75rem)" }}
+                  >
+                    <span className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[calc(50%+2px)] leading-none">→</span>
                   </button>
                 </div>
               </div>
             </div>
 
-            {/* Progress Indicator */}
-            <div className="flex gap-2 items-center justify-start w-full">
+            {/* Progress - bars on desktop, dots on mobile only */}
+            <div className="basem-progress-bars hidden lg:flex gap-2 items-center justify-start w-full flex-shrink-0">
               {slides.map((_, i) => (
-                <div key={i} className="rounded-sm transition-all duration-300" style={{ width: i === currentSlide ? "8rem" : "5rem", height: "0.25rem", backgroundColor: i === currentSlide ? "#FF4438" : "#1ECAD3" }} />
+                <div
+                  key={i}
+                  className="rounded-sm transition-all duration-300 flex-shrink-0"
+                  style={{
+                    width: i === currentSlide ? "8rem" : "5rem",
+                    height: "0.25rem",
+                    backgroundColor: i === currentSlide ? "#FF4438" : "#1ECAD3",
+                  }}
+                />
+              ))}
+            </div>
+            <div className="basem-progress-dots flex lg:hidden gap-2 items-center justify-start w-full flex-shrink-0">
+              {slides.map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-full transition-all duration-300 flex-shrink-0"
+                  style={{
+                    width: i === currentSlide ? "0.625rem" : "0.5rem",
+                    height: i === currentSlide ? "0.625rem" : "0.5rem",
+                    backgroundColor: i === currentSlide ? "#FF4438" : "#1ECAD3",
+                  }}
+                />
               ))}
             </div>
           </div>
         </div>
       </div>
 
+      {/* Mobile responsive styles (extracted from full section code) */}
       <style>{`
-        @media (max-width: 768px) {
-          section#basem { min-height: auto; height: auto !important; max-height: none !important; padding: 2rem 0; }
-          section#basem > div:first-of-type { top: clamp(8rem, 20vh, 12rem); left: 0; }
-          section#basem > div:last-of-type { flex-direction: column; }
-          .basem-left-column { flex: none; width: 100%; min-height: auto; padding-right: 0; justify-content: center; order: 1; }
-          .desktop-bars { display: none; }
-          .mobile-bars { display: flex; }
-          .basem-image { max-height: 400px; right: 0; }
-          section#basem > div:last-of-type > div:last-of-type { flex: none; width: 100%; min-height: auto; padding: 0.5rem 1rem 2rem 1rem; order: 2; margin-top: -1.6rem; }
-          section#basem > div:last-of-type > div:last-of-type > div { transform: none; max-width: 100%; }
-          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type { min-height: 280px; padding: 2rem 1.5rem 4rem 1.5rem; }
-          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > h2 { font-size: 28px; min-height: auto; margin-bottom: 1rem; }
-          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > p { font-size: 16px; }
+        /* Single image layout: hide bars for all slides */
+        section#basem.basem-single-image .desktop-bars,
+        section#basem.basem-single-image .mobile-bars {
+          display: none !important;
         }
+
+        /* No left padding on section and image column */
+        section#basem {
+          padding-left: 0 !important;
+          margin-left: 0 !important;
+        }
+        section#basem > div:last-of-type {
+          padding-left: 0 !important;
+        }
+        section#basem .basem-left-column {
+          padding-left: 0 !important;
+          margin-left: 0 !important;
+        }
+
+        /* Desktop + laptop only: slider top margin + 5rem left shift */
+        @media (min-width: 1024px) {
+          section#basem .basem-slider-inner {
+            margin-top: clamp(1.5rem, 4vw, 5rem) !important;
+            transform: translateX(-5rem);
+          }
+        }
+
+        /* Mobile + tablet: stacked layout (same as mobile so slider and image don't intersect) */
+        @media (max-width: 1023px) {
+          section#basem {
+            min-height: auto !important;
+            padding: 2rem 0 !important;
+          }
+          section#basem > div:first-of-type {
+            top: clamp(8rem, 20vh, 12rem) !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+          }
+          section#basem > div:last-of-type {
+            flex-direction: column !important;
+            gap: 0 !important;
+            width: 100% !important;
+          }
+          .basem-left-column {
+            flex: none !important;
+            width: 100% !important;
+            min-height: auto !important;
+            padding-right: 0 !important;
+            padding-bottom: 0 !important;
+            display: flex !important;
+            align-items: flex-end !important;
+            justify-content: center !important;
+            order: 1 !important;
+            position: relative !important;
+          }
+          .desktop-bars {
+            display: none !important;
+          }
+          .mobile-bars {
+            display: flex !important;
+            position: absolute !important;
+            bottom: 0 !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            z-index: 1 !important;
+            gap: 1rem !important;
+            justify-content: center !important;
+            align-items: flex-end !important;
+          }
+          .basem-image {
+            max-height: 400px !important;
+            width: auto !important;
+            right: auto !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+            position: relative !important;
+            z-index: 2 !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type {
+            flex: none !important;
+            width: 100% !important;
+            min-height: auto !important;
+            padding: 0.5rem 1rem 2rem 1rem !important;
+            order: 2 !important;
+            margin-top: -1.6rem !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div {
+            transform: none !important;
+            max-width: 100% !important;
+            padding: 0 !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type {
+            min-height: 280px !important;
+            padding: 2rem 1.5rem 4rem 1.5rem !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > h2 {
+            font-size: 28px !important;
+            min-height: auto !important;
+            margin-bottom: 1rem !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > p {
+            font-size: 16px !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > div {
+            bottom: 1rem !important;
+            left: 1.5rem !important;
+            right: 1.5rem !important;
+          }
+          .basem-progress-dots {
+            justify-content: center !important;
+          }
+          .basem-progress-dots > div {
+            max-width: 0.625rem !important;
+            min-width: 0.5rem !important;
+          }
+        }
+        /* Small mobile tweaks */
         @media (max-width: 480px) {
-          .basem-image { max-height: 300px; }
-          .mobile-bars img:first-child { height: 300px; }
-          .mobile-bars img:last-child { height: 250px; }
+          section#basem {
+            padding: 1.5rem 0 !important;
+          }
+          .basem-image {
+            max-height: 300px !important;
+          }
+          .mobile-bars img:first-of-type {
+            height: 300px !important;
+          }
+          .mobile-bars img:last-of-type {
+            height: 250px !important;
+            margin-bottom: 0.1rem !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type {
+            padding: 1.5rem 0.75rem !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type {
+            min-height: 240px !important;
+            padding: 1.5rem 1rem 3.5rem 1rem !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > h2 {
+            font-size: 24px !important;
+          }
+          section#basem > div:last-of-type > div:last-of-type > div > div:first-of-type > p {
+            font-size: 14px !important;
+          }
+          .basem-progress-dots {
+            justify-content: center !important;
+          }
+          .basem-progress-dots > div {
+            max-width: 0.5rem !important;
+            min-width: 0.375rem !important;
+          }
         }
       `}</style>
     </section>

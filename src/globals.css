@@ -64,6 +64,8 @@ html {
 }
 
 body {
+  margin: 0;
+  overflow-x: hidden;
   font-family: 'Alexandria', 'MyriadPro', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
