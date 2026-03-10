@@ -2,16 +2,16 @@ import type { FC } from "react";
 
 const ManageBuilding: FC = () => {
   return (
-    <section id="manage-building" className="relative overflow-hidden" style={{ backgroundColor: "#002B49", padding: "clamp(2rem, 3.4vw, 3rem) 0 0" }}>
-      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-center lg:items-center gap-10 lg:gap-14">
-        {/* Left: Text */}
-        <div className="flex-1 relative z-10 lg:-translate-y-5 transition-transform duration-300">
+    <section id="manage-building" className="relative overflow-hidden pb-8 lg:pb-0" style={{ backgroundColor: "#002B49", paddingTop: "clamp(2rem, 3.4vw, 3rem)" }}>
+      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-14">
+        {/* Left: Text - smaller gap on mobile so bars and box are closer */}
+        <div className="flex-1 relative z-10 order-2 lg:order-1 mt-4 lg:mt-0 lg:-translate-y-5 transition-transform duration-300">
           <div
-            className="manage-text-card relative inline-block rounded-2xl"
+            className="manage-text-card relative inline-block rounded-2xl w-full max-w-full"
             style={{
-              padding: "clamp(2rem, 4vw, 3rem)",
-              minWidth: "clamp(340px, 42vw, 520px)",
-              minHeight: "clamp(240px, 28vw, 320px)",
+              padding: "clamp(1.25rem, 3vw, 3rem)",
+              minWidth: "min(100%, clamp(280px, 42vw, 520px))",
+              minHeight: "clamp(180px, 22vh, 320px)",
               background: "#00213A",
               border: "1px solid rgba(132,218,222,0.2)",
               boxShadow: "0 14px 32px rgba(0,0,0,0.35)",
@@ -41,7 +41,7 @@ const ManageBuilding: FC = () => {
         </div>
 
         {/* Right: Blue bar (left) + Red bar (right), bottoms aligned, small gap */}
-        <div className="flex-1 flex justify-center lg:justify-end relative self-end">
+        <div className="flex-1 flex justify-center lg:justify-end relative order-1 lg:order-2 self-center lg:self-end mb-4 lg:mb-0">
           <div className="flex items-end overflow-visible" style={{ gap: "clamp(6px, 0.75vw, 12px)", height: "clamp(390px, 45vw, 590px)" }}>
             {/* Blue bar - left, taller */}
             <div className="relative overflow-visible" style={{ height: "100%" }}>
