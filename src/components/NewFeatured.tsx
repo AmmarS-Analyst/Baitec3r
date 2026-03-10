@@ -15,7 +15,7 @@ const NewFeatured: FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mx-auto pb-[60px] max-w-[910px]">
           <h2 className="leading-none" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 700, color: "#002B49", lineHeight: 1, marginTop: "1rem" }}>
-            Why property owners choose BaiTech or A system built for clarity and control.
+            Why property owners choose BaiTech.
           </h2>
         </div>
 
