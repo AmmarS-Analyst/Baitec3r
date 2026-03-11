@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 const ContactUs: FC = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="scroll-reveal min-h-screen bg-white">
       {/* Header */}
       <header className="bg-baitech-navy py-6">
         <div className="max-w-4xl mx-auto px-4 flex items-center justify-between">

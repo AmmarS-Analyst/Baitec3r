@@ -60,7 +60,7 @@ const Basem: FC = () => {
   return (
     <section
       id="basem"
-      className="relative flex flex-col lg:flex-row items-stretch justify-start overflow-hidden min-h-[60vh] lg:min-h-[90vh] bg-white basem-single-image p-0 m-0 pl-0 ml-0"
+      className="scroll-reveal relative flex flex-col lg:flex-row items-stretch justify-start overflow-hidden min-h-[60vh] lg:min-h-[90vh] bg-white basem-single-image p-0 m-0 pl-0 ml-0"
       style={{ paddingLeft: 0, marginLeft: 0 }}
     >
       {/* Navy background - mobile */}

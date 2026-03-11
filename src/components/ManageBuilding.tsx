@@ -2,7 +2,7 @@ import type { FC } from "react";
 
 const ManageBuilding: FC = () => {
   return (
-    <section id="manage-building" className="relative overflow-hidden pb-8 lg:pb-0" style={{ backgroundColor: "#002B49", paddingTop: "clamp(2rem, 3.4vw, 3rem)" }}>
+    <section id="manage-building" className="scroll-reveal relative overflow-hidden pb-8 lg:pb-0" style={{ backgroundColor: "#002B49", paddingTop: "clamp(2rem, 3.4vw, 3rem)" }}>
       <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-14">
         {/* Left: Text - smaller gap on mobile so bars and box are closer */}
         <div className="flex-1 relative z-10 order-2 lg:order-1 mt-4 lg:mt-0 lg:-translate-y-5 transition-transform duration-300">

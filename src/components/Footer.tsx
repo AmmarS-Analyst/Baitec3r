@@ -4,7 +4,7 @@ const Footer: FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <section className="footer-five" style={{ width: "100%", overflowX: "hidden" }}>
+    <section className="scroll-reveal footer-five" style={{ width: "100%", overflowX: "hidden" }}>
       <div className="relative z-[1]">
         {/* Main Footer */}
         <div style={{ paddingTop: "80px" }}>

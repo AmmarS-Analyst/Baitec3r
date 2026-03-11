@@ -29,6 +29,35 @@ const App: FC = () => {
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
+  // Global scroll-reveal for sections
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>(".scroll-reveal"));
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("scroll-reveal--visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.18,
+        rootMargin: "0px 0px -10% 0px",
+      }
+    );
+
+    elements.forEach((el) => {
+      if (!el.classList.contains("scroll-reveal--visible")) {
+        observer.observe(el);
+      }
+    });
+
+    return () => observer.disconnect();
+  }, [currentPage]);
+
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       const link = (e.target as HTMLElement).closest("a[href^='/']");

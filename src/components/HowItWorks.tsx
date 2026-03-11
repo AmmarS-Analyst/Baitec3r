@@ -69,7 +69,7 @@ const HowItWorks: FC = () => {
   };
 
   return (
-    <section id="how-it-works" className="hiw-section bg-white">
+    <section id="how-it-works" className="scroll-reveal hiw-section bg-white">
       {/* Header */}
       <div className="bg-white text-center" style={{ padding: "clamp(0.5rem, 1vw, 1rem) clamp(1rem, 3vw, 2rem) clamp(3rem, 5vw, 5rem)" }}>
         <h2 style={{ fontSize: "clamp(40px, 6vw, 68px)", fontWeight: 700, color: "#002B49", lineHeight: 1.2, margin: 0 }}>
