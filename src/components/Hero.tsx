@@ -29,7 +29,7 @@ const Hero: FC = () => {
   return (
     <section
       id="home"
-      className="relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-10 lg:gap-0 w-full"
+      className="relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-6 lg:gap-4 w-full"
       style={{ backgroundColor: "#0a202d", marginTop: "70px" }}
     >
       {/* Column 1 on desktop (visual); on mobile shown below text (order-2) */}
@@ -45,12 +45,18 @@ const Hero: FC = () => {
 
         {/* Desktop: same mobile+3D SVG in overflow-visible wrapper + gradient */}
         <div className="hidden lg:flex relative flex-1 min-h-0 items-end justify-center overflow-visible w-full">
-          {/* Gradient: light blue from phone area toward text (right) */}
+          {/* Gradient: same height band as phone, inset from top and bottom so edges stay inside */}
           <div
-            className="absolute inset-0 pointer-events-none z-[1]"
+            className="absolute right-0 pointer-events-none z-[1]"
             style={{
+              left: "58%",
+              top: "3%",
+              bottom: "8%",
+              // Horizontal fade toward the text
               background:
-                "linear-gradient(to right, rgba(132,218,222,0.22) 0%, rgba(132,218,222,0.08) 35%, transparent 60%)",
+                "linear-gradient(to right, rgba(132,218,222,0.26) 0%, rgba(132,218,222,0.18) 30%, rgba(132,218,222,0.08) 65%, transparent 100%)",
+              // Very slight blur so the top/bottom horizontal edges are not sharp lines
+              filter: "blur(6px)",
             }}
           />
           <div className="relative flex items-end justify-center overflow-visible z-[2] w-full">
@@ -66,7 +72,7 @@ const Hero: FC = () => {
       {/* Column 2 on desktop (text); on mobile text above visual (order-1) */}
       <div className="relative flex flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-center text-center lg:text-left">
         {/* Same light blue gradient as desktop, as text bg on mob/tablet only */}
-        <div className="hero-text-block w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-4 lg:px-10 lg:py-0 rounded-none">
+        <div className="hero-text-block w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-4 lg:px-6 lg:py-0 rounded-none">
           <style>{`
             .hero-text-block { background: linear-gradient(to right, rgba(132,218,222,0.22) 0%, rgba(132,218,222,0.08) 35%, transparent 60%); }
             @media (min-width: 1024px) { .hero-text-block { background: transparent; } }
