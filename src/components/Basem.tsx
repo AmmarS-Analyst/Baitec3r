@@ -280,11 +280,31 @@ const Basem: FC = () => {
           margin-left: 0 !important;
         }
 
-        /* Desktop + laptop only: slider top margin + 5rem left shift */
+        /* Desktop + laptop only: keep visuals bottom-anchored and prevent overlap */
         @media (min-width: 1024px) {
+          section#basem > div:last-of-type {
+            gap: clamp(1rem, 2vw, 2.5rem) !important;
+          }
+
+          section#basem .basem-left-column {
+            justify-content: flex-end !important;
+          }
+
+          section#basem .basem-image {
+            margin-top: auto !important;
+          }
+
           section#basem .basem-slider-inner {
             margin-top: clamp(1.5rem, 4vw, 5rem) !important;
-            transform: translateX(-5rem);
+            transform: translateX(clamp(-5rem, -4vw, -2rem));
+            max-width: min(46rem, 100%) !important;
+          }
+        }
+
+        /* Smaller desktop/laptop widths: reduce the left shift to avoid textbox overlap */
+        @media (min-width: 1024px) and (max-width: 1280px) {
+          section#basem .basem-slider-inner {
+            transform: translateX(clamp(-2rem, -2vw, 0rem)) !important;
           }
         }
 
