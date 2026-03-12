@@ -102,10 +102,6 @@ const HowItWorks: FC = () => {
                 </p>
               </div>
 
-              <div className="hiw2-swipe-hint text-white/90 text-center mb-4">
-                Swipe left / right to see steps
-              </div>
-
               {/* Timeline - more gap between steps */}
               <div className="hiw2-timeline-wrap relative pt-3">
                 <div className="hiw2-timeline-line absolute h-[2px] bg-white z-0" style={{ top: "clamp(24px, 3vw, 36px)", left: "5%", right: "5%" }} />
@@ -133,6 +129,33 @@ const HowItWorks: FC = () => {
                     </div>
                   ))}
                 </div>
+              </div>
+
+              {/* Mobile / tablet stepper: single circle + left/right arrows + straight line */}
+              <div className="hiw2-stepper-mobile lg:hidden mt-6 relative flex items-center justify-between gap-4 w-full max-w-[380px] mx-auto">
+                <div className="hiw2-stepper-line absolute left-[9%] right-[9%]" />
+                <button
+                  type="button"
+                  onClick={goPrev}
+                  className="hiw2-stepper-btn flex items-center justify-center"
+                >
+                  <span>&larr;</span>
+                </button>
+                <div className="flex flex-col items-center gap-1 z-[1]">
+                  <div className="hiw2-stepper-circle flex items-center justify-center">
+                    <span>{activeStep + 1}</span>
+                  </div>
+                  <span className="hiw2-stepper-step text-white/90 text-sm font-semibold" style={{ opacity: 0.78 }}>
+                    Step {activeStep + 1}
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="hiw2-stepper-btn flex items-center justify-center"
+                >
+                  <span>&rarr;</span>
+                </button>
               </div>
             </div>
 
@@ -251,6 +274,56 @@ const HowItWorks: FC = () => {
 
         .hiw2-swipe-hint { display: none; font-size: 0.95rem; letter-spacing: 0.01em; }
 
+        /* Mobile stepper: straight line + circle + arrows */
+        .hiw2-stepper-btn {
+          width: 2.15rem;
+          height: 2.15rem;
+          border-radius: 999px;
+          border: 2px solid #ffffff;
+          background: #ffffff;
+          color: #002B49;
+          font-size: 1.25rem;
+          margin-top: -1.6rem;
+          transition: opacity 0.25s ease-out, background-color 0.25s ease-out, color 0.25s ease-out, transform 0.25s ease-out;
+        }
+        .hiw2-stepper-btn:not(:disabled):hover {
+          opacity: 1;
+          background-color: #f5f5f5;
+          color: #002B49;
+          transform: translateY(-1px);
+        }
+        .hiw2-stepper-btn:not(:disabled):active {
+          background-color: #FF4438;
+          border-color: #FF4438;
+          color: #FFFFFF;
+        }
+        .hiw2-stepper-btn:disabled {
+          opacity: 1;
+        }
+        .hiw2-stepper-circle {
+          width: 2.4rem;
+          height: 2.4rem;
+          border-radius: 999px;
+          border: 2px solid #ffffff;
+          background: #84DADE;
+          color: #002B49;
+          font-weight: 700;
+          font-size: 1.1rem;
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+          transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease-out;
+          margin-top: -0.2rem;
+        }
+        .scroll-reveal--visible .hiw2-stepper-circle {
+          transform: translateY(0);
+        }
+
+        .hiw2-stepper-line {
+          height: 2px;
+          background-color: rgba(255,255,255,0.9);
+          top: calc(50% - 1rem);
+          transform: none;
+        }
+
         @media (max-width: 1023px) {
           .hiw-section { max-height: none; }
           .hiw2-wrap { margin-top: 0; }
@@ -297,8 +370,8 @@ const HowItWorks: FC = () => {
           }
 
           .hiw2-content-column > div:first-of-type { width: 85%; max-width: 400px; margin-left: auto; margin-right: auto; padding: 1.5rem 1.25rem; }
-          .hiw2-content-column > div:first-of-type > h3 { font-size: 24px; min-height: auto; }
-          .hiw2-content-column > div:first-of-type > p { font-size: 15px; min-height: auto; }
+          .hiw2-content-column > div:first-of-type > h3 { font-size: 24px; min-height: 3.3rem; }
+          .hiw2-content-column > div:first-of-type > p { font-size: 15px; min-height: 5.4rem; }
           .hiw2-content-column > div:last-of-type { width: 90%; max-width: 420px; margin-left: auto; margin-right: auto; }
 
           /* Mobile/tablet stepper: swipeable + snap, show active label only */
@@ -330,8 +403,8 @@ const HowItWorks: FC = () => {
           .hiw2-phone-wrap > img { max-width: 280px; transform: translate(0rem, -1.15rem) !important; }
           .hiw2-setup-bars { height: clamp(22em, 64vw, 30em); }
           .hiw2-content-column > div:first-of-type { padding: 1.25rem 1rem; width: 90%; max-width: 350px; }
-          .hiw2-content-column > div:first-of-type > h3 { font-size: 22px; }
-          .hiw2-content-column > div:first-of-type > p { font-size: 13px; }
+          .hiw2-content-column > div:first-of-type > h3 { font-size: 22px; min-height: 3.1rem; }
+          .hiw2-content-column > div:first-of-type > p { font-size: 13px; min-height: 5rem; }
         }
       `}</style>
     </section>
