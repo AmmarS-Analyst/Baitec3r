@@ -15,7 +15,7 @@ const FAQ: FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="py-20">
+    <section id="faq" className="scroll-reveal py-20">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
           <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 700, color: "#002B49", lineHeight: 1.2 }}>

@@ -29,7 +29,7 @@ const Hero: FC = () => {
   return (
     <section
       id="home"
-      className="relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-6 lg:gap-4 w-full"
+      className="scroll-reveal relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-6 lg:gap-4 w-full"
       style={{ backgroundColor: "#0a202d", marginTop: "70px" }}
     >
       {/* Column 1 on desktop (visual); on mobile shown below text (order-2) */}

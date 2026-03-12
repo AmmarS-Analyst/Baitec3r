@@ -20,6 +20,8 @@ const HowItWorks: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const contentBoxRef = useRef<HTMLDivElement>(null);
+  const swipeStartXRef = useRef<number | null>(null);
+  const swipeLastXRef = useRef<number | null>(null);
 
   const handleStepChange = (step: number) => {
     if (step === activeStep || isTransitioning) return;
@@ -40,8 +42,34 @@ const HowItWorks: FC = () => {
     }, 300);
   };
 
+  const goNext = () => handleStepChange(activeStep === steps.length - 1 ? 0 : activeStep + 1);
+  const goPrev = () => handleStepChange(activeStep === 0 ? steps.length - 1 : activeStep - 1);
+
+  const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    swipeStartXRef.current = e.touches[0]?.clientX ?? null;
+    swipeLastXRef.current = swipeStartXRef.current;
+  };
+
+  const handleTouchMove: React.TouchEventHandler<HTMLDivElement> = (e) => {
+    swipeLastXRef.current = e.touches[0]?.clientX ?? swipeLastXRef.current;
+  };
+
+  const handleTouchEnd: React.TouchEventHandler<HTMLDivElement> = () => {
+    const startX = swipeStartXRef.current;
+    const endX = swipeLastXRef.current;
+    swipeStartXRef.current = null;
+    swipeLastXRef.current = null;
+
+    if (startX == null || endX == null) return;
+    const dx = endX - startX;
+    const threshold = 55;
+    if (Math.abs(dx) < threshold) return;
+    if (dx < 0) goNext();
+    else goPrev();
+  };
+
   return (
-    <section id="how-it-works" className="hiw-section bg-white" style={{ maxHeight: "860px" }}>
+    <section id="how-it-works" className="scroll-reveal hiw-section bg-white">
       {/* Header */}
       <div className="bg-white text-center" style={{ padding: "clamp(0.5rem, 1vw, 1rem) clamp(1rem, 3vw, 2rem) clamp(3rem, 5vw, 5rem)" }}>
         <h2 style={{ fontSize: "clamp(40px, 6vw, 68px)", fontWeight: 700, color: "#002B49", lineHeight: 1.2, margin: 0 }}>
@@ -52,7 +80,12 @@ const HowItWorks: FC = () => {
       {/* Content - navy area needs enough height for text box + timeline */}
       <div className="hiw-navy-bg" style={{ background: "#002B49", padding: "clamp(2.5rem, 4vw, 4rem) clamp(1rem, 3vw, 2rem) 0", overflow: "visible" }}>
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-stretch gap-4" style={{ marginTop: "-8rem" }}>
+          <div
+            className="hiw2-wrap flex flex-col lg:flex-row items-stretch gap-4"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+          >
             {/* Left Column - pushed toward bottom */}
             <div className="w-full lg:w-1/2 hiw2-content-column flex flex-col justify-end" style={{ paddingLeft: "clamp(0, 2vw, 2rem)", paddingBottom: "clamp(2rem, 3vw, 3rem)" }}>
               {/* Content Box */}
@@ -69,12 +102,20 @@ const HowItWorks: FC = () => {
                 </p>
               </div>
 
+              <div className="hiw2-swipe-hint text-white/90 text-center mb-4">
+                Swipe left / right to see steps
+              </div>
+
               {/* Timeline - more gap between steps */}
-              <div className="relative pt-3">
+              <div className="hiw2-timeline-wrap relative pt-3">
                 <div className="absolute h-[2px] bg-white z-0" style={{ top: "clamp(24px, 3vw, 36px)", left: "5%", right: "5%" }} />
-                <div className="flex justify-between relative z-[1]" style={{ gap: "clamp(0.5rem, 1.5vw, 1.5rem)" }}>
+                <div className="hiw2-timeline flex justify-between relative z-[1]" style={{ gap: "clamp(0.5rem, 1.5vw, 1.5rem)" }}>
                   {steps.map((step, i) => (
-                    <div key={i} className="flex flex-col items-center cursor-pointer flex-1 transition-all duration-500" onClick={() => handleStepChange(i)}>
+                    <div
+                      key={i}
+                      className={`hiw2-step flex flex-col items-center cursor-pointer flex-1 transition-all duration-500 ${i === activeStep ? "is-active" : ""}`}
+                      onClick={() => handleStepChange(i)}
+                    >
                       <div
                         className="rounded-full flex items-center justify-center mb-3 relative z-[2] transition-all duration-500"
                         style={{
@@ -86,7 +127,7 @@ const HowItWorks: FC = () => {
                       >
                         <div className="w-full h-full rounded-full flex items-center justify-center transition-all duration-300" style={{ backgroundColor: i === activeStep ? "#FF4438" : "#84DADE", boxShadow: "0 0 0 2px rgba(0,43,73,0.3), 0 2px 8px rgba(0,0,0,0.15)" }} />
                       </div>
-                      <span className="text-center transition-all duration-400 leading-tight" style={{ fontSize: "clamp(9px, 1.1vw, 13px)", fontWeight: 600, color: i === activeStep ? "#FF4438" : "#FFFFFF", width: "clamp(72px, 9vw, 110px)", minHeight: "2.6em" }}>
+                      <span className="hiw2-step-label text-center transition-all duration-400 leading-tight" style={{ fontSize: "clamp(9px, 1.1vw, 13px)", fontWeight: 600, color: i === activeStep ? "#FF4438" : "#FFFFFF", width: "clamp(72px, 9vw, 110px)", minHeight: "2.6em" }}>
                         {step.title}
                       </span>
                     </div>
@@ -98,9 +139,13 @@ const HowItWorks: FC = () => {
             {/* Right Column - Phone + Bars */}
             <div className="w-full lg:w-1/2 hiw2-mobile-column relative hiw-right-col" style={{ overflow: "visible" }}>
               {/* Bars: fully visible overflow */}
-              <img src="/assets/images/how_it_works2/setup_bars.svg" alt="Setup Bars" className="absolute pointer-events-none" style={{ bottom: 0, right: "-1rem", width: "auto", height: "38em", zIndex: 1 }} />
+              <img
+                src="/assets/images/how_it_works2/setup_bars.svg"
+                alt="Setup Bars"
+                className="hiw2-setup-bars absolute pointer-events-none"
+              />
               {/* Mobile image: pushed more right */}
-              <div className="relative z-[3] flex justify-end items-end overflow-visible" style={{ height: "clamp(26rem, 46vw, 41rem)", paddingRight: "0rem" }}>
+              <div className="hiw2-phone-wrap relative z-[3] flex justify-end items-end overflow-visible" style={{ height: "clamp(26rem, 46vw, 41rem)", paddingRight: "0rem" }}>
                 <img
                   src={stepImages[activeStep]}
                   alt={steps[activeStep].title}
@@ -123,21 +168,92 @@ const HowItWorks: FC = () => {
       <style>{`
         .hiw-section { overflow-x: hidden; overflow-y: hidden; }
         .hiw-right-col { overflow: visible !important; }
+        .hiw-section { max-height: 860px; }
+        .hiw2-wrap { margin-top: -8rem; }
+        .hiw2-setup-bars {
+          bottom: 0;
+          right: -1rem;
+          width: auto;
+          height: 38em;
+          z-index: 1;
+        }
+        .hiw2-swipe-hint { display: none; font-size: 0.95rem; letter-spacing: 0.01em; }
 
         @media (max-width: 1023px) {
-          .hiw2-mobile-column { order: 1; margin-top: -5rem; margin-bottom: -2rem; }
+          .hiw-section { max-height: none; }
+          .hiw2-wrap { margin-top: 0; }
+          .hiw2-swipe-hint { display: block; }
+          .hiw2-timeline-wrap { display: none; }
+        }
+
+        @media (max-width: 1023px) {
+          /* Stack as flex on mobile/tablet: phone+bgs first, centered; content below */
+          .hiw2-mobile-column {
+            order: 1;
+            margin-top: 0;
+            margin-bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: clamp(0.5rem, 2vw, 1.25rem);
+          }
           .hiw2-content-column { order: 2; width: 100%; padding-left: 0; }
-          .hiw2-mobile-column > img[alt="Setup Bars"] { height: 23em; right: 50%; transform: translateX(50%); bottom: 0; }
-          .hiw2-mobile-column > div:first-of-type > img { max-width: 330px; width: 100%; transform: translate(2.25rem, -2.25rem) !important; }
+
+          /* Center bars relative to column and keep visible */
+          .hiw2-setup-bars {
+            height: clamp(24em, 48vw, 34em);
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            bottom: 0;
+          }
+
+          /* Center the phone block and remove the desktop push-right feel */
+          .hiw2-phone-wrap {
+            width: 100%;
+            justify-content: center !important;
+            align-items: flex-start !important;
+            height: clamp(22rem, 52vw, 30rem) !important;
+          }
+          .hiw2-phone-wrap > img {
+            max-width: 330px;
+            width: 100%;
+            transform: translate(0rem, -1.5rem) !important;
+          }
+
           .hiw2-content-column > div:first-of-type { width: 85%; max-width: 400px; margin-left: auto; margin-right: auto; padding: 1.5rem 1.25rem; }
           .hiw2-content-column > div:first-of-type > h3 { font-size: 24px; min-height: auto; }
           .hiw2-content-column > div:first-of-type > p { font-size: 15px; min-height: auto; }
           .hiw2-content-column > div:last-of-type { width: 90%; max-width: 420px; margin-left: auto; margin-right: auto; }
+
+          /* Mobile/tablet stepper: swipeable + snap, show active label only */
+          .hiw2-timeline {
+            overflow-x: auto;
+            overflow-y: visible;
+            justify-content: flex-start;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 0.25rem 0.25rem 0.75rem 0.25rem;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100%;
+          }
+          .hiw2-timeline::-webkit-scrollbar { height: 0; }
+
+          .hiw2-step {
+            flex: 0 0 auto;
+            width: clamp(72px, 18vw, 96px);
+            scroll-snap-align: center;
+          }
+
+          .hiw2-step-label { display: none; width: auto !important; min-height: 0 !important; }
+          .hiw2-step.is-active .hiw2-step-label { display: block; }
         }
         @media (max-width: 480px) {
-          .hiw2-mobile-column { margin-top: -4rem; margin-bottom: -1.5rem; }
-          .hiw2-mobile-column > div:first-of-type > img { max-width: 280px; transform: translate(1.9rem, -1.5rem) !important; }
-          .hiw2-mobile-column > img[alt="Setup Bars"] { height: 19em; }
+          .hiw2-mobile-column { margin-top: 0; margin-bottom: 0; }
+          .hiw2-phone-wrap { height: clamp(20rem, 62vw, 26rem) !important; }
+          .hiw2-phone-wrap > img { max-width: 280px; transform: translate(0rem, -1.15rem) !important; }
+          .hiw2-setup-bars { height: clamp(22em, 64vw, 30em); }
           .hiw2-content-column > div:first-of-type { padding: 1.25rem 1rem; width: 90%; max-width: 350px; }
           .hiw2-content-column > div:first-of-type > h3 { font-size: 22px; }
           .hiw2-content-column > div:first-of-type > p { font-size: 13px; }

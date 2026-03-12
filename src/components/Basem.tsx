@@ -59,7 +59,7 @@ const Basem: FC = () => {
   return (
     <section
       id="basem"
-      className="relative flex flex-col lg:flex-row items-stretch justify-start overflow-hidden min-h-[60vh] lg:min-h-[90vh] bg-white basem-single-image p-0 m-0 pl-0 ml-0"
+      className="scroll-reveal relative flex flex-col lg:flex-row items-stretch justify-start overflow-hidden min-h-[60vh] lg:min-h-[90vh] bg-white basem-single-image p-0 m-0 pl-0 ml-0"
       style={{ paddingLeft: 0, marginLeft: 0 }}
     >
       {/* Navy background - mobile */}
@@ -71,8 +71,8 @@ const Basem: FC = () => {
       <div
         className="absolute right-0 bottom-0 bg-[#002B49] z-0 hidden lg:block"
         style={{
-          top: "clamp(10rem, 25vh, 21rem)",
-          left: "clamp(15%, 20vw, 20%)",
+          top: "clamp(10rem, 25vh, 21rem)", // same height behavior as before
+          left: "clamp(8%, 15vw, 18%)", // slightly more left so it sits cleanly behind Basem
         }}
       />
 
@@ -143,9 +143,9 @@ const Basem: FC = () => {
               marginRight: "clamp(1rem, 2vw, 2rem)",
             }}
           >
-            {/* Text Box – margin from top and right so it shows completely */}
+            {/* Text Box – fixed outline on desktop, only text inside changes */}
             <div
-              className="relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0"
+              className="basem-text-box relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0"
               style={{
                 minHeight: "clamp(260px, 42vh, 400px)",
                 paddingTop: "clamp(2rem, 3vw, 3rem)",
@@ -285,11 +285,40 @@ const Basem: FC = () => {
           margin-left: 0 !important;
         }
 
-        /* Desktop + laptop only: slider top margin + 5rem left shift */
+        /* Desktop + laptop only: keep visuals bottom-anchored and slider/text box consistently positioned */
         @media (min-width: 1024px) {
+          section#basem > div:last-of-type {
+            gap: clamp(1rem, 2vw, 2.5rem) !important;
+            align-items: center !important;
+          }
+
+          section#basem .basem-left-column {
+            justify-content: flex-end !important;
+          }
+
+          section#basem .basem-image {
+            margin-top: auto !important;
+          }
+
           section#basem .basem-slider-inner {
-            margin-top: clamp(1.5rem, 4vw, 5rem) !important;
-            transform: translateX(-5rem);
+            /* Top offset tied to viewport height so it sits comfortably below the top on desktops */
+            margin-top: clamp(2.5rem, 6vh, 4rem) !important;
+            transform: translateX(clamp(-5rem, -4vw, -2rem));
+            max-width: min(46rem, 100%) !important;
+          }
+
+          /* Fixed text box height on desktop: outline does not grow with text length */
+          section#basem .basem-text-box {
+            height: clamp(20rem, 36vh, 24rem);
+          }
+        }
+
+        /* Smaller desktop/laptop widths: reduce the left shift to avoid textbox overlap */
+        @media (min-width: 1024px) and (max-width: 1280px) {
+          section#basem .basem-slider-inner {
+            /* On laptops, push the box noticeably lower for maximum headroom */
+            margin-top: clamp(4.5rem, 11vh, 6.5rem) !important;
+            transform: translateX(clamp(-2rem, -2vw, 0rem)) !important;
           }
         }
 

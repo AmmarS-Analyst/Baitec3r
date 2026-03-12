@@ -39,6 +39,21 @@
   --animate-counter: counter-up 2s ease-out forwards;
 }
 
+/* Scroll reveal – shared across sections */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.6s ease-out,
+    transform 0.6s ease-out;
+  will-change: opacity, transform;
+}
+
+.scroll-reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 @keyframes fade-in {
   from { opacity: 0; }
   to { opacity: 1; }
