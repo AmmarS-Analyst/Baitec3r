@@ -1,4 +1,4 @@
-import { useState, type FC } from "react";
+import { useState, useEffect, type FC } from "react";
 import basemSvg from "../../fAssets/Basem.svg";
 import rentTrackingSvg from "../../fAssets/rent tracking.svg";
 import maintenanceSvg from "../../fAssets/maintenence.svg";
@@ -24,21 +24,27 @@ const slideVisuals = [
   instantSvg,
 ];
 
+type SlideDirection = "left" | "right";
+
 const Basem: FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isBoundaryVisualTransition, setIsBoundaryVisualTransition] = useState(false);
+  const [slideDirection, setSlideDirection] = useState<SlideDirection>("right");
+  const [entering, setEntering] = useState(false);
   const isBasemSlide = currentSlide === 0;
 
   const isBasemBoundaryTransition = (from: number, to: number) =>
     (from === 0 && to !== 0) || (from !== 0 && to === 0);
 
-  const changeSlide = (nextSlide: number) => {
+  const changeSlide = (nextSlide: number, direction: SlideDirection) => {
     if (isTransitioning) return;
+    setSlideDirection(direction);
     setIsBoundaryVisualTransition(isBasemBoundaryTransition(currentSlide, nextSlide));
     setIsTransitioning(true);
     setTimeout(() => {
       setCurrentSlide(nextSlide);
+      setEntering(true);
       setTimeout(() => {
         setIsTransitioning(false);
         setIsBoundaryVisualTransition(false);
@@ -46,14 +52,20 @@ const Basem: FC = () => {
     }, 420);
   };
 
+  useEffect(() => {
+    if (!entering) return;
+    const t = setTimeout(() => setEntering(false), 380);
+    return () => clearTimeout(t);
+  }, [entering]);
+
   const handlePrev = () => {
     const nextSlide = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
-    changeSlide(nextSlide);
+    changeSlide(nextSlide, "left");
   };
 
   const handleNext = () => {
     const nextSlide = currentSlide === slides.length - 1 ? 0 : currentSlide + 1;
-    changeSlide(nextSlide);
+    changeSlide(nextSlide, "right");
   };
 
   return (
@@ -77,9 +89,9 @@ const Basem: FC = () => {
       />
 
       <div className="w-full flex flex-col lg:flex-row items-stretch justify-center lg:justify-start flex-1 min-h-0 min-w-0 gap-0 relative z-10 p-0 m-0 pl-0 ml-0">
-        {/* Single image per slide: centred on mobile, flush left on desktop. No bars. */}
+        {/* Single image per slide: on scroll – mobile: fade in from top; desktop: fade in from left */}
         <div
-          className="basem-left-column relative flex flex-1 min-w-0 min-h-0 flex-col w-full lg:w-1/2 order-1 lg:order-1 overflow-hidden items-start justify-center lg:justify-start lg:items-start self-stretch p-0 m-0 pl-0 ml-0"
+          className="basem-reveal-images basem-left-column relative flex flex-1 min-w-0 min-h-0 flex-col w-full lg:w-1/2 order-1 lg:order-1 overflow-hidden items-start justify-center lg:justify-start lg:items-start self-stretch p-0 m-0 pl-0 ml-0"
           style={{ minHeight: "clamp(280px, 45vh, 520px)", paddingLeft: 0, marginLeft: 0 }}
         >
           {/* Desktop Bars - hidden (single image layout for all slides) */}
@@ -135,8 +147,8 @@ const Basem: FC = () => {
           />
         </div>
 
-        {/* Bottom on mobile, Right on desktop: Slider. Horizontal start, vertical centre. */}
-        <div className="flex flex-1 min-w-0 flex-col items-start justify-center w-full lg:w-1/2 order-2 lg:order-2 relative z-10">
+        {/* Bottom on mobile, Right on desktop: Slider. On scroll – mobile: fade in from bottom; desktop: fade in from right */}
+        <div className="basem-reveal-text flex flex-1 min-w-0 flex-col items-start justify-center w-full lg:w-1/2 order-2 lg:order-2 relative z-10">
           <div
             className="relative w-full flex flex-col items-start justify-center gap-4 lg:gap-6 max-w-[90rem] min-w-0 text-left basem-slider-inner"
             style={{
@@ -155,25 +167,41 @@ const Basem: FC = () => {
               }}
             >
               <h2
-                className={`text-[#84DADE] font-bold leading-tight flex-shrink-0 ${
-                  isTransitioning ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
-                }`}
+                className="text-[#84DADE] font-bold leading-tight flex-shrink-0"
                 style={{
                   transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), transform 450ms cubic-bezier(0.4, 0, 0.2, 1)",
                   fontSize: "clamp(1.25rem, 4vw, 3.25rem)",
                   marginBottom: "clamp(0.5rem, 1.25vw, 1.25rem)",
                   minHeight: "clamp(2.5rem, 8vw, 5rem)",
+                  opacity: isTransitioning ? 0 : entering ? 0 : 1,
+                  transform: isTransitioning
+                    ? slideDirection === "right"
+                      ? "translateX(-28px)"
+                      : "translateX(28px)"
+                    : entering
+                      ? slideDirection === "right"
+                        ? "translateX(28px)"
+                        : "translateX(-28px)"
+                      : "translateX(0)",
                 }}
               >
                 {slides[currentSlide].title}
               </h2>
               <p
-                className={`flex-1 min-h-0 text-white font-normal leading-[1.7] ${
-                  isTransitioning ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
-                }`}
+                className="flex-1 min-h-0 text-white font-normal leading-[1.7]"
                 style={{
                   transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, transform 450ms cubic-bezier(0.4, 0, 0.2, 1) 50ms",
                   fontSize: "clamp(0.875rem, 1.9vw, 1.625rem)",
+                  opacity: isTransitioning ? 0 : entering ? 0 : 1,
+                  transform: isTransitioning
+                    ? slideDirection === "right"
+                      ? "translateX(-28px)"
+                      : "translateX(28px)"
+                    : entering
+                      ? slideDirection === "right"
+                        ? "translateX(28px)"
+                        : "translateX(-28px)"
+                      : "translateX(0)",
                 }}
               >
                 {slides[currentSlide].description}
@@ -264,7 +292,51 @@ const Basem: FC = () => {
         </div>
       </div>
 
-      {/* Mobile responsive styles (extracted from full section code) */}
+      {/* Scroll reveal: desktop = images from left, text from right; mobile = images from top, text from bottom */}
+      <style>{`
+        /* Section: only fade, no translate (columns do the directional animation) */
+        section#basem.scroll-reveal { transform: none; }
+        section#basem.scroll-reveal--visible { transform: none; }
+
+        /* Images column: mobile = from top; desktop = from left */
+        section#basem .basem-reveal-images {
+          opacity: 0;
+          transform: translateY(-36px);
+          transition: opacity 0.65s ease-out, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        section#basem.scroll-reveal--visible .basem-reveal-images {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        @media (min-width: 1024px) {
+          section#basem .basem-reveal-images {
+            transform: translateX(-48px);
+          }
+          section#basem.scroll-reveal--visible .basem-reveal-images {
+            transform: translateX(0);
+          }
+        }
+
+        /* Text column (box + buttons + indicators): mobile = from bottom; desktop = from right */
+        section#basem .basem-reveal-text {
+          opacity: 0;
+          transform: translateY(36px);
+          transition: opacity 0.65s ease-out, transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: 0.12s;
+        }
+        section#basem.scroll-reveal--visible .basem-reveal-text {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        @media (min-width: 1024px) {
+          section#basem .basem-reveal-text {
+            transform: translateX(48px);
+          }
+          section#basem.scroll-reveal--visible .basem-reveal-text {
+            transform: translateX(0);
+          }
+        }
+      `}</style>
       <style>{`
         /* Single image layout: hide bars for all slides */
         section#basem.basem-single-image .desktop-bars,

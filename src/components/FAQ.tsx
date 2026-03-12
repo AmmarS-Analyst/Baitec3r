@@ -17,13 +17,13 @@ const FAQ: FC = () => {
   return (
     <section id="faq" className="scroll-reveal py-20">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 scroll-reveal-item scroll-reveal-item--d1">
           <h2 style={{ fontSize: "clamp(28px, 4vw, 48px)", fontWeight: 700, color: "#002B49", lineHeight: 1.2 }}>
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto scroll-reveal-item scroll-reveal-item--d2">
           {faqs.map((faq, index) => (
             <div key={index} className="mb-3">
               <div

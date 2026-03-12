@@ -39,13 +39,13 @@
   --animate-counter: counter-up 2s ease-out forwards;
 }
 
-/* Scroll reveal – shared across sections */
+/* Scroll reveal – shared across sections (mobile/tablet/laptop/desktop) */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(26px);
+  transform: translateY(28px);
   transition:
-    opacity 0.6s ease-out,
-    transform 0.6s ease-out;
+    opacity 0.65s ease-out,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
   will-change: opacity, transform;
 }
 
@@ -53,6 +53,27 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Staggered items inside sections – reveal when parent section is visible */
+.scroll-reveal-item {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-reveal--visible .scroll-reveal-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal--visible .scroll-reveal-item--d1 { transition-delay: 0.10s; }
+.scroll-reveal--visible .scroll-reveal-item--d2 { transition-delay: 0.22s; }
+.scroll-reveal--visible .scroll-reveal-item--d3 { transition-delay: 0.34s; }
+.scroll-reveal--visible .scroll-reveal-item--d4 { transition-delay: 0.46s; }
+.scroll-reveal--visible .scroll-reveal-item--d5 { transition-delay: 0.58s; }
+.scroll-reveal--visible .scroll-reveal-item--d6 { transition-delay: 0.70s; }
+.scroll-reveal--visible .scroll-reveal-item--d7 { transition-delay: 0.82s; }
+.scroll-reveal--visible .scroll-reveal-item--d8 { transition-delay: 0.94s; }
 
 @keyframes fade-in {
   from { opacity: 0; }

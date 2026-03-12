@@ -71,14 +71,14 @@ const HowItWorks: FC = () => {
   return (
     <section id="how-it-works" className="scroll-reveal hiw-section bg-white">
       {/* Header */}
-      <div className="bg-white text-center" style={{ padding: "clamp(0.5rem, 1vw, 1rem) clamp(1rem, 3vw, 2rem) clamp(3rem, 5vw, 5rem)" }}>
+      <div className="bg-white text-center scroll-reveal-item scroll-reveal-item--d1" style={{ padding: "clamp(0.5rem, 1vw, 1rem) clamp(1rem, 3vw, 2rem) clamp(3rem, 5vw, 5rem)" }}>
         <h2 style={{ fontSize: "clamp(40px, 6vw, 68px)", fontWeight: 700, color: "#002B49", lineHeight: 1.2, margin: 0 }}>
           From setup to full control
         </h2>
       </div>
 
       {/* Content - navy area needs enough height for text box + timeline */}
-      <div className="hiw-navy-bg" style={{ background: "#002B49", padding: "clamp(2.5rem, 4vw, 4rem) clamp(1rem, 3vw, 2rem) 0", overflow: "visible" }}>
+      <div className="hiw-navy-bg scroll-reveal-item scroll-reveal-item--d2" style={{ background: "#002B49", padding: "clamp(2.5rem, 4vw, 4rem) clamp(1rem, 3vw, 2rem) 0", overflow: "visible" }}>
         <div className="max-w-7xl mx-auto">
           <div
             className="hiw2-wrap flex flex-col lg:flex-row items-stretch gap-4"
@@ -91,7 +91,7 @@ const HowItWorks: FC = () => {
               {/* Content Box */}
               <div
                 ref={contentBoxRef}
-                className="mb-6"
+                className="mb-6 hiw2-content-box"
                 style={{ background: "transparent", border: "1px solid #FFFFFF", borderRadius: "20px", padding: "clamp(1.5rem, 3vw, 2.5rem)", minHeight: "clamp(236px, 24.5vw, 304px)" }}
               >
                 <h3 className="flex items-center transition-opacity duration-300" style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700, color: "#84DADE", marginBottom: "1rem", lineHeight: 1.2, minHeight: "clamp(60px, 7.6vw, 90px)" }}>
@@ -108,7 +108,7 @@ const HowItWorks: FC = () => {
 
               {/* Timeline - more gap between steps */}
               <div className="hiw2-timeline-wrap relative pt-3">
-                <div className="absolute h-[2px] bg-white z-0" style={{ top: "clamp(24px, 3vw, 36px)", left: "5%", right: "5%" }} />
+                <div className="hiw2-timeline-line absolute h-[2px] bg-white z-0" style={{ top: "clamp(24px, 3vw, 36px)", left: "5%", right: "5%" }} />
                 <div className="hiw2-timeline flex justify-between relative z-[1]" style={{ gap: "clamp(0.5rem, 1.5vw, 1.5rem)" }}>
                   {steps.map((step, i) => (
                     <div
@@ -170,13 +170,85 @@ const HowItWorks: FC = () => {
         .hiw-right-col { overflow: visible !important; }
         .hiw-section { max-height: 860px; }
         .hiw2-wrap { margin-top: -8rem; }
+
+        /* Scroll animations – desktop/laptop vs tablet/mobile */
+        /* Text box: desktop fade in from left, mobile smooth fade up */
+        .hiw2-content-box {
+          opacity: 0;
+          transform: translateY(18px);
+          transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .scroll-reveal--visible .hiw2-content-box {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        @media (min-width: 1024px) {
+          .hiw2-content-box {
+            transform: translateX(-42px);
+          }
+          .scroll-reveal--visible .hiw2-content-box {
+            transform: translateX(0);
+          }
+        }
+
+        /* Timeline buttons: appear one by one after text box */
+        .hiw2-timeline-wrap {
+          opacity: 0;
+          transform: translateY(22px);
+          transition: opacity 0.55s ease-out, transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: 0.28s;
+        }
+        .scroll-reveal--visible .hiw2-timeline-wrap {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .hiw2-timeline-line {
+          transform-origin: left center;
+          transform: scaleX(0);
+          transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: 0.3s;
+        }
+        .scroll-reveal--visible .hiw2-timeline-line {
+          transform: scaleX(1);
+        }
+        .hiw2-step {
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity 0.45s ease-out, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .scroll-reveal--visible .hiw2-step:nth-child(1) { transition-delay: 0.32s; opacity: 1; transform: translateY(0); }
+        .scroll-reveal--visible .hiw2-step:nth-child(2) { transition-delay: 0.44s; opacity: 1; transform: translateY(0); }
+        .scroll-reveal--visible .hiw2-step:nth-child(3) { transition-delay: 0.56s; opacity: 1; transform: translateY(0); }
+        .scroll-reveal--visible .hiw2-step:nth-child(4) { transition-delay: 0.68s; opacity: 1; transform: translateY(0); }
+        .scroll-reveal--visible .hiw2-step:nth-child(5) { transition-delay: 0.80s; opacity: 1; transform: translateY(0); }
+
+        /* Bars + phone: desktop bars from bottom then phone, mobile bars from left + phone from right */
         .hiw2-setup-bars {
           bottom: 0;
           right: -1rem;
           width: auto;
           height: 38em;
           z-index: 1;
+          opacity: 0;
+          transform: translateY(46px);
+          transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: 0.35s;
         }
+        .hiw2-phone-wrap {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+          transition-delay: 0.82s;
+        }
+        .scroll-reveal--visible .hiw2-setup-bars {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .scroll-reveal--visible .hiw2-phone-wrap {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
         .hiw2-swipe-hint { display: none; font-size: 0.95rem; letter-spacing: 0.01em; }
 
         @media (max-width: 1023px) {
@@ -204,8 +276,11 @@ const HowItWorks: FC = () => {
             height: clamp(24em, 48vw, 34em);
             left: 50%;
             right: auto;
-            transform: translateX(-50%);
+            transform: translateX(-60%);
             bottom: 0;
+          }
+          .hiw-section.scroll-reveal--visible .hiw2-setup-bars {
+            transform: translateX(-50%);
           }
 
           /* Center the phone block and remove the desktop push-right feel */

@@ -106,8 +106,8 @@ const Hero: FC = () => {
                 width: 96vw !important;
                 max-width: none !important;
                 min-width: 0;
-                max-height: min(65vh, 520px) !important;
-                min-height: min(50vh, 280px) !important;
+                max-height: min(82vh, 600px) !important;
+                min-height: min(58vh, 320px) !important;
               }
             }
             @media (min-width: 768px) and (max-width: 1023px) {
@@ -162,11 +162,13 @@ const Hero: FC = () => {
 
       {/* Column 2 on desktop (text); on mobile text above visual (order-1), less top gap on mob */}
       <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-start lg:justify-center pt-6 lg:pt-0 text-center lg:text-left">
-        {/* Text block: no gradient on mobile/tablet; minimal padding on mobile to reduce gap */}
-        <div className="hero-text-block w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none">
+        {/* Text block: fade in from top on scroll (like coming from under header) */}
+        <div className="hero-text-reveal w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none hero-text-block">
           <style>{`
             .hero-text-block { background: transparent; }
             @media (max-width: 767px) { .hero-text-block { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; } }
+            .hero-text-reveal { opacity: 0; transform: translateY(-24px); transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+            .hero-animated .hero-text-reveal { opacity: 1; transform: translateY(0); }
           `}</style>
           <h1
             className="font-bold uppercase leading-tight text-[#84DADE] max-w-xl"

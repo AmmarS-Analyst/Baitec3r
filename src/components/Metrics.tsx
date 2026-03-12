@@ -44,7 +44,7 @@ const Metrics: FC = () => {
   return (
     <section id="impact" ref={sectionRef} className="scroll-reveal pt-[120px]" style={{ background: "linear-gradient(180deg, rgba(0,153,168,0.05) 0%, rgba(132,218,222,0.08) 100%)" }}>
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mx-auto pb-[60px] max-w-[548px]">
+        <div className="text-center mx-auto pb-[60px] max-w-[548px] scroll-reveal-item scroll-reveal-item--d1">
           <div className="inline-flex items-center gap-2 rounded-full font-bold capitalize leading-none py-2 px-7 mb-4 min-w-max" style={{ background: "linear-gradient(135deg, #84DADE 0%, #1ECAD3 100%)", color: "#FFFFFF", boxShadow: "0 8px 24px rgba(132,218,222,0.3)" }}>
             our impact
           </div>
@@ -53,7 +53,7 @@ const Metrics: FC = () => {
           </h2>
         </div>
 
-        <div className="flex justify-center flex-col md:flex-row" style={{ borderTop: "1px solid #1ECAD3", borderBottom: "1px solid #1ECAD3", gap: "clamp(20px, 5vw, 80px)", padding: "clamp(30px, 5vw, 60px) 0" }}>
+        <div className="flex justify-center flex-col md:flex-row scroll-reveal-item scroll-reveal-item--d2" style={{ borderTop: "1px solid #1ECAD3", borderBottom: "1px solid #1ECAD3", gap: "clamp(20px, 5vw, 80px)", padding: "clamp(30px, 5vw, 60px) 0" }}>
           {stats.map((stat, i) => (
             <div key={i} className="contents">
               <div className="text-center flex flex-col justify-center items-center cursor-pointer transition-all duration-300 hover:scale-110">

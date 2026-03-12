@@ -3,7 +3,7 @@ import type { FC } from "react";
 const ManageBuilding: FC = () => {
   return (
     <section id="manage-building" className="scroll-reveal relative overflow-hidden pb-8 lg:pb-0" style={{ backgroundColor: "#002B49", paddingTop: "clamp(2rem, 3.4vw, 3rem)" }}>
-      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-14">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col lg:flex-row items-stretch lg:items-center gap-4 lg:gap-14 scroll-reveal-item scroll-reveal-item--d1">
         {/* Left: Text - smaller gap on mobile so bars and box are closer */}
         <div className="flex-1 relative z-10 order-2 lg:order-1 mt-4 lg:mt-0 lg:-translate-y-5 transition-transform duration-300">
           <div
@@ -44,7 +44,7 @@ const ManageBuilding: FC = () => {
         <div className="flex-1 flex justify-center lg:justify-end relative order-1 lg:order-2 self-center lg:self-end mb-4 lg:mb-0">
           <div className="flex items-end overflow-visible" style={{ gap: "clamp(6px, 0.75vw, 12px)", height: "clamp(390px, 45vw, 590px)" }}>
             {/* Blue bar - left, taller */}
-            <div className="relative overflow-visible" style={{ height: "100%" }}>
+            <div className="manage-blue-bar-wrap relative overflow-visible" style={{ height: "100%" }}>
               <img
                 src="/assets/images/manage/manage_blue_bar.svg"
                 alt="Blue Bar"
@@ -62,7 +62,7 @@ const ManageBuilding: FC = () => {
               </svg>
             </div>
             {/* Red bar - right, shorter, bottom-aligned */}
-            <div className="relative overflow-visible" style={{ height: "66%" }}>
+            <div className="manage-red-bar-wrap relative overflow-visible" style={{ height: "66%" }}>
               <img
                 src="/assets/images/manage/manage_red_bar.svg"
                 alt="Red Bar"
@@ -105,6 +105,31 @@ const ManageBuilding: FC = () => {
         .manage-text-card {
           position: relative;
           overflow: hidden;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        section#manage-building.scroll-reveal--visible .manage-text-card {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Bars on scroll: desktop + mobile – blue from bottom, then red */
+        .manage-blue-bar-wrap,
+        .manage-red-bar-wrap {
+          opacity: 0;
+          transform: translateY(44px);
+          transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        section#manage-building.scroll-reveal--visible .manage-blue-bar-wrap {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.18s;
+        }
+        section#manage-building.scroll-reveal--visible .manage-red-bar-wrap {
+          opacity: 1;
+          transform: translateY(0);
+          transition-delay: 0.42s;
         }
 
         /* Vertical shine (right) - tapered with bright core */

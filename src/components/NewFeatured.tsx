@@ -13,17 +13,19 @@ const NewFeatured: FC = () => {
   return (
     <section id="newfeatured" className="scroll-reveal py-[120px] bg-white">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mx-auto pb-[60px] max-w-[910px]">
+        <div className="text-center mx-auto pb-[60px] max-w-[910px] scroll-reveal-item scroll-reveal-item--d1">
           <h2 className="leading-none" style={{ fontSize: "clamp(28px, 4vw, 42px)", fontWeight: 700, color: "#002B49", lineHeight: 1, marginTop: "1rem" }}>
             Why property owners choose BaiTech.
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-          {features.map((feature, idx) => (
+          {features.map((feature, idx) => {
+            const delayClass = `scroll-reveal-item scroll-reveal-item--d${Math.min(idx + 1, 8)}`;
+            return (
             <div
               key={idx}
-              className="rounded-2xl h-full cursor-pointer transition-all duration-1000"
+              className={`rounded-2xl h-full cursor-pointer transition-all duration-1000 ${delayClass}`}
               style={{ background: "#002B49", padding: "clamp(36px, 4vw, 56px) clamp(28px, 3vw, 44px)", borderRadius: "20px" }}
               onMouseEnter={(e) => {
                 const el = e.currentTarget;
@@ -50,7 +52,7 @@ const NewFeatured: FC = () => {
                 {feature.desc}
               </p>
             </div>
-          ))}
+          )})}
         </div>
       </div>
     </section>

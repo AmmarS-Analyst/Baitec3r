@@ -10,7 +10,7 @@ const Footer: FC = () => {
         <div style={{ paddingTop: "80px" }}>
           <div className="max-w-7xl mx-auto px-4">
             <div
-              className="flex gap-6 justify-between flex-wrap lg:flex-nowrap footer-main-content"
+              className="flex gap-6 justify-between flex-wrap lg:flex-nowrap footer-main-content scroll-reveal-item scroll-reveal-item--d1"
               style={{ borderTop: "3px solid #1ECAD3", borderBottom: "3px solid #1ECAD3", padding: "80px 0" }}
             >
               {/* Column 1 - Logo and Contact */}
@@ -134,7 +134,7 @@ const Footer: FC = () => {
             </div>
 
             {/* Footer Bottom */}
-            <div className="footer-bottom-section" style={{ padding: "32px 0", borderTop: "1px solid #84DADE" }}>
+            <div className="footer-bottom-section scroll-reveal-item scroll-reveal-item--d2" style={{ padding: "32px 0", borderTop: "1px solid #84DADE" }}>
               <div className="flex items-center justify-between gap-4 flex-wrap">
                 <p className="font-semibold m-0" style={{ color: "#002B49", fontSize: "16px" }}>
                   Copyright &copy; {currentYear}{" "}
