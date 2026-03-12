@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { useEffect } from "react";
-import heromobileSvg from "../../fAssets/SVG/Heromobile.svg";
+import houseSvg from "../../fAssets/SVG/House.svg";
+import phoneSvg from "../../fAssets/SVG/Phone.svg";
 
 const Hero: FC = () => {
   useEffect(() => {
@@ -33,46 +34,71 @@ const Hero: FC = () => {
     >
       {/* Column 1 on desktop (visual); on mobile shown below text (order-2), flex-none so no gap */}
       <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 flex items-center justify-center lg:justify-end order-2 lg:order-1">
-        {/* Mobile: full-width image, no stretch; tablet: current size */}
+        {/* Mobile + tablet: phone + house (tablet gets scaled sizing so it doesn't break) */}
         <div className="flex w-full items-center justify-center lg:hidden px-0 flex-none">
-          <img
-            src={heromobileSvg}
-            alt=""
-            className="hero-mobile-img w-[95vw] max-w-[580px] object-contain object-center"
-          />
+          <div className="hero-mobile-img hero-phone-house relative w-[95vw] max-w-[580px] aspect-[697.74/697.74] max-h-[min(55vh,520px)]">
+            <img
+              src={phoneSvg}
+              alt=""
+              className="absolute inset-0 w-full h-full object-contain object-bottom z-0"
+            />
+            <img
+              src={houseSvg}
+              alt=""
+              className="absolute inset-0 w-full h-full object-contain z-10"
+              style={{ objectPosition: "120% 100%" }}
+            />
+          </div>
           <style>{`
             @media (max-width: 767px) {
-              .hero-mobile-img {
+              .hero-mobile-img.hero-phone-house {
                 width: 96vw !important;
                 max-width: none !important;
+                min-width: 0;
+              }
+            }
+            @media (min-width: 768px) and (max-width: 1023px) {
+              .hero-mobile-img.hero-phone-house {
+                width: min(65vw, 520px) !important;
+                max-width: min(65vw, 520px) !important;
+                max-height: min(55vh, 480px) !important;
                 min-width: 0;
               }
             }
           `}</style>
         </div>
 
-        {/* Desktop: same mobile+3D SVG in overflow-visible wrapper + gradient */}
+        {/* Desktop: phone + house grouped (same structure as mobile so it always shows) */}
         <div className="hidden lg:flex relative flex-1 min-h-0 items-end justify-center overflow-visible w-full">
-          {/* Gradient: same height band as phone, inset from top and bottom so edges stay inside */}
+          {/* Gradient: same height band as phone */}
           <div
             className="absolute right-0 pointer-events-none z-[1]"
             style={{
               left: "58%",
               top: "3%",
               bottom: "8%",
-              // Horizontal fade toward the text
               background:
                 "linear-gradient(to right, rgba(132,218,222,0.26) 0%, rgba(132,218,222,0.18) 30%, rgba(132,218,222,0.08) 65%, transparent 100%)",
-              // Very slight blur so the top/bottom horizontal edges are not sharp lines
               filter: "blur(6px)",
             }}
           />
-          <div className="relative flex items-end justify-center overflow-visible z-[2] w-full">
-            <img
-              src={heromobileSvg}
-              alt=""
-              className="max-h-[min(85vh,920px)] w-auto object-contain object-bottom"
-            />
+          <div className="relative flex items-end justify-center overflow-visible z-[2] w-full h-full min-h-[min(70vh,800px)] min-w-0">
+            <div
+              className="hero-desktop-phone-house relative w-full max-w-[min(85vh,920px)] min-w-[280px] h-[min(85vh,920px)] min-h-[360px] max-h-[85vh]"
+              style={{ aspectRatio: "1" }}
+            >
+              <img
+                src={phoneSvg}
+                alt=""
+                className="absolute inset-0 w-full h-full object-contain object-bottom z-0"
+              />
+              <img
+                src={houseSvg}
+                alt=""
+                className="absolute inset-0 w-full h-full object-contain z-10"
+                style={{ objectPosition: "120% 100%" }}
+              />
+            </div>
           </div>
         </div>
       </div>
