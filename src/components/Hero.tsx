@@ -58,7 +58,7 @@ const Hero: FC = () => {
     <section
       ref={heroRef}
       id="home"
-      className={`relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-0 lg:gap-4 w-full ${heroAnimated ? "hero-animated" : ""}`}
+      className={`relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-start lg:justify-start gap-0 lg:gap-4 w-full pt-4 lg:pt-0 ${heroAnimated ? "hero-animated" : ""}`}
       style={{ backgroundColor: "#0a202d", marginTop: "70px" }}
     >
       {/* Column 1 on desktop (visual); on mobile shown below text (order-2), flex-none so no gap */}
@@ -106,6 +106,8 @@ const Hero: FC = () => {
                 width: 96vw !important;
                 max-width: none !important;
                 min-width: 0;
+                max-height: min(65vh, 520px) !important;
+                min-height: min(50vh, 280px) !important;
               }
             }
             @media (min-width: 768px) and (max-width: 1023px) {
@@ -158,8 +160,8 @@ const Hero: FC = () => {
         </div>
       </div>
 
-      {/* Column 2 on desktop (text); on mobile text above visual (order-1), flex-none so no extra gap */}
-      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-center text-center lg:text-left">
+      {/* Column 2 on desktop (text); on mobile text above visual (order-1), less top gap on mob */}
+      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-start lg:justify-center pt-6 lg:pt-0 text-center lg:text-left">
         {/* Text block: no gradient on mobile/tablet; minimal padding on mobile to reduce gap */}
         <div className="hero-text-block w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none">
           <style>{`
