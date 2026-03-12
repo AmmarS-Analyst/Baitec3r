@@ -157,7 +157,7 @@ const Basem: FC = () => {
           >
             {/* Text Box – fixed outline, min width so text never overlaps */}
             <div
-              className="basem-text-box relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0 lg:min-w-[min(100%,38rem)]"
+              className="basem-text-box relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0 lg:min-w-[min(100%,50rem)]"
               style={{
                 minHeight: "clamp(260px, 42vh, 400px)",
                 paddingTop: "clamp(2rem, 3vw, 3rem)",
@@ -191,7 +191,7 @@ const Basem: FC = () => {
                 className="flex-1 min-h-0 text-white font-normal leading-[1.7]"
                 style={{
                   transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, transform 450ms cubic-bezier(0.4, 0, 0.2, 1) 50ms",
-                  fontSize: "clamp(0.875rem, 1.9vw, 1.625rem)",
+                  fontSize: "clamp(0.875rem, 1.9vw, 1.3rem)",
                   opacity: isTransitioning ? 0 : entering ? 0 : 1,
                   transform: isTransitioning
                     ? slideDirection === "right"
