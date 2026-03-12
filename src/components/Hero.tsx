@@ -22,25 +22,33 @@ const Hero: FC = () => {
     };
   }, []);
 
-  const heading = "SMARTER PROPERTY MANAGEMENT, ALL IN ONE PLACE";
   const subtitle =
     "Manage units, tenants, rent, and maintenance through one connected, intelligent platform.";
 
   return (
     <section
       id="home"
-      className="scroll-reveal relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-6 lg:gap-4 w-full"
+      className="scroll-reveal relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-0 lg:gap-4 w-full"
       style={{ backgroundColor: "#0a202d", marginTop: "70px" }}
     >
-      {/* Column 1 on desktop (visual); on mobile shown below text (order-2) */}
-      <div className="relative flex flex-1 min-w-0 flex-shrink-0 w-full lg:w-1/2 flex items-center justify-center lg:justify-end order-2 lg:order-1">
-        {/* Mobile/tablet: centered phone image, ~75% viewport width like reference */}
-        <div className="flex flex-1 w-full items-center justify-center lg:hidden px-4">
+      {/* Column 1 on desktop (visual); on mobile shown below text (order-2), flex-none so no gap */}
+      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 flex items-center justify-center lg:justify-end order-2 lg:order-1">
+        {/* Mobile: full-width image, no stretch; tablet: current size */}
+        <div className="flex w-full items-center justify-center lg:hidden px-0 flex-none">
           <img
             src={heromobileSvg}
             alt=""
-            className="w-[90vw] max-w-[520px] object-contain object-center"
+            className="hero-mobile-img w-[95vw] max-w-[580px] object-contain object-center"
           />
+          <style>{`
+            @media (max-width: 767px) {
+              .hero-mobile-img {
+                width: 96vw !important;
+                max-width: none !important;
+                min-width: 0;
+              }
+            }
+          `}</style>
         </div>
 
         {/* Desktop: same mobile+3D SVG in overflow-visible wrapper + gradient */}
@@ -69,13 +77,13 @@ const Hero: FC = () => {
         </div>
       </div>
 
-      {/* Column 2 on desktop (text); on mobile text above visual (order-1) */}
-      <div className="relative flex flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-center text-center lg:text-left">
-        {/* Same light blue gradient as desktop, as text bg on mob/tablet only */}
-        <div className="hero-text-block w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-4 lg:px-6 lg:py-0 rounded-none">
+      {/* Column 2 on desktop (text); on mobile text above visual (order-1), flex-none so no extra gap */}
+      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-center text-center lg:text-left">
+        {/* Text block: no gradient on mobile/tablet; minimal padding on mobile to reduce gap */}
+        <div className="hero-text-block w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none">
           <style>{`
-            .hero-text-block { background: linear-gradient(to right, rgba(132,218,222,0.22) 0%, rgba(132,218,222,0.08) 35%, transparent 60%); }
-            @media (min-width: 1024px) { .hero-text-block { background: transparent; } }
+            .hero-text-block { background: transparent; }
+            @media (max-width: 767px) { .hero-text-block { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; } }
           `}</style>
           <h1
             className="font-bold uppercase leading-tight text-[#84DADE] max-w-xl"
@@ -85,7 +93,11 @@ const Hero: FC = () => {
               letterSpacing: "-0.02em",
             }}
           >
-            {heading}
+            SMARTER{"\u00A0"}PROPERTY
+            <br />
+            MANAGEMENT,
+            <br />
+            ALL IN ONE PLACE
           </h1>
           <p
             className="font-normal max-w-xl text-white"

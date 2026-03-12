@@ -143,9 +143,9 @@ const Basem: FC = () => {
               marginRight: "clamp(1rem, 2vw, 2rem)",
             }}
           >
-            {/* Text Box – fixed outline on desktop, only text inside changes */}
+            {/* Text Box – fixed outline, min width so text never overlaps */}
             <div
-              className="basem-text-box relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0"
+              className="basem-text-box relative w-full max-w-[95%] lg:max-w-full mx-auto lg:mx-0 flex flex-col bg-transparent border-[3px] border-white rounded-2xl min-w-0 lg:min-w-[min(100%,38rem)]"
               style={{
                 minHeight: "clamp(260px, 42vh, 400px)",
                 paddingTop: "clamp(2rem, 3vw, 3rem)",
@@ -304,7 +304,7 @@ const Basem: FC = () => {
             /* Top offset tied to viewport height so it sits comfortably below the top on desktops */
             margin-top: clamp(2.5rem, 6vh, 4rem) !important;
             transform: translateX(clamp(-5rem, -4vw, -2rem));
-            max-width: min(46rem, 100%) !important;
+            max-width: min(56rem, 100%) !important;
           }
 
           /* Fixed text box height on desktop: outline does not grow with text length */
