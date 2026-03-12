@@ -5,7 +5,6 @@ import maintenanceSvg from "../../fAssets/maintenence.svg";
 import tenantInfoSvg from "../../fAssets/tenant information.svg";
 import unitStatusSvg from "../../fAssets/unit status.svg";
 import instantSvg from "../../fAssets/Instant.svg";
-import bgBarsSvg from "../../fAssets/bg_bars.svg";
 
 const slides = [
   { title: "Let Basem handle it", description: "Your Ai property assistant on Whatsapp. Available 24/7." },
@@ -43,8 +42,8 @@ const Basem: FC = () => {
       setTimeout(() => {
         setIsTransitioning(false);
         setIsBoundaryVisualTransition(false);
-      }, 50);
-    }, 300);
+      }, 80);
+    }, 420);
   };
 
   const handlePrev = () => {
@@ -123,22 +122,16 @@ const Basem: FC = () => {
             />
           </div>
 
-          {/* Static bg bars – same position as slide images, always behind, does not change with slides */}
-          <div className="absolute inset-0 z-[1] flex items-end justify-center lg:justify-start pointer-events-none">
-            <img
-              src={bgBarsSvg}
-              alt=""
-              className="basem-bg-bars w-auto max-w-full object-contain object-bottom max-h-[clamp(200px,40vh,320px)] lg:max-h-[min(920px,calc(100vh-80px))]"
-            />
-          </div>
-
           {/* Slide image - one per slide, centred on mob, start on desktop */}
           <img
             src={slideVisuals[currentSlide]}
             alt={isBasemSlide ? "Basem" : slides[currentSlide].title}
-            className={`basem-image relative z-10 w-auto max-w-full object-contain object-bottom flex-shrink-0 transform-gpu transition-all duration-[350ms] ease-in-out ${
-              isTransitioning && isBoundaryVisualTransition ? "opacity-0 translate-y-2 scale-[0.985]" : "opacity-100 scale-100"
+            className={`basem-image relative z-10 w-auto max-w-full object-contain object-bottom flex-shrink-0 transform-gpu ${
+              isTransitioning && isBoundaryVisualTransition ? "opacity-0 translate-y-1 scale-[0.99]" : "opacity-100 scale-100"
             } ${!isBasemSlide ? "lg:translate-y-4" : ""} max-h-[clamp(200px,40vh,320px)] lg:max-h-[min(920px,calc(100vh-80px))]`}
+            style={{
+              transition: "opacity 500ms cubic-bezier(0.4, 0, 0.2, 1), transform 500ms cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
           />
         </div>
 
@@ -162,10 +155,11 @@ const Basem: FC = () => {
               }}
             >
               <h2
-                className={`text-[#84DADE] font-bold leading-tight flex-shrink-0 transition-all duration-300 ${
-                  isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+                className={`text-[#84DADE] font-bold leading-tight flex-shrink-0 ${
+                  isTransitioning ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
                 }`}
                 style={{
+                  transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1), transform 450ms cubic-bezier(0.4, 0, 0.2, 1)",
                   fontSize: "clamp(1.25rem, 4vw, 3.25rem)",
                   marginBottom: "clamp(0.5rem, 1.25vw, 1.25rem)",
                   minHeight: "clamp(2.5rem, 8vw, 5rem)",
@@ -174,10 +168,13 @@ const Basem: FC = () => {
                 {slides[currentSlide].title}
               </h2>
               <p
-                className={`flex-1 min-h-0 text-white font-normal leading-[1.7] transition-all duration-300 delay-75 ${
-                  isTransitioning ? "opacity-0 translate-y-2" : "opacity-100 translate-y-0"
+                className={`flex-1 min-h-0 text-white font-normal leading-[1.7] ${
+                  isTransitioning ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
                 }`}
-                style={{ fontSize: "clamp(0.875rem, 1.9vw, 1.625rem)" }}
+                style={{
+                  transition: "opacity 450ms cubic-bezier(0.4, 0, 0.2, 1) 50ms, transform 450ms cubic-bezier(0.4, 0, 0.2, 1) 50ms",
+                  fontSize: "clamp(0.875rem, 1.9vw, 1.625rem)",
+                }}
               >
                 {slides[currentSlide].description}
               </p>
@@ -193,10 +190,14 @@ const Basem: FC = () => {
               >
                 {currentSlide > 0 ? (
                   <div
-                    className={`rounded-full p-[0.2rem] flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-[#84DADE] to-[#002B49] transition-opacity duration-300 ${
+                    className={`rounded-full p-[0.45rem] flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-[#84DADE] to-[#002B49] ${
                       isTransitioning ? "opacity-50" : "opacity-100"
                     }`}
-                    style={{ width: "clamp(3rem, 4.5vw, 4.5rem)", height: "clamp(3rem, 4.5vw, 4.5rem)" }}
+                    style={{
+                      transition: "opacity 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+                      width: "clamp(3rem, 4.5vw, 4.5rem)",
+                      height: "clamp(3rem, 4.5vw, 4.5rem)",
+                    }}
                   >
                     <button
                       type="button"
@@ -211,10 +212,14 @@ const Basem: FC = () => {
                   <div style={{ width: "clamp(3rem, 4.5vw, 4.5rem)" }} />
                 )}
                 <div
-                  className={`rounded-full p-[0.2rem] flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-[#84DADE] to-[#002B49] transition-opacity duration-300 ${
+                  className={`rounded-full p-[0.45rem] flex items-center justify-center flex-shrink-0 bg-gradient-to-br from-[#84DADE] to-[#002B49] ${
                     isTransitioning ? "opacity-50" : "opacity-100"
                   }`}
-                  style={{ width: "clamp(3rem, 4.5vw, 4.5rem)", height: "clamp(3rem, 4.5vw, 4.5rem)" }}
+                  style={{
+                    transition: "opacity 400ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    width: "clamp(3rem, 4.5vw, 4.5rem)",
+                    height: "clamp(3rem, 4.5vw, 4.5rem)",
+                  }}
                 >
                   <button
                     type="button"
