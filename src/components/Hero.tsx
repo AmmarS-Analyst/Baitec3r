@@ -1,9 +1,37 @@
 import type { FC } from "react";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import houseSvg from "../../fAssets/SVG/House.svg";
 import phoneSvg from "../../fAssets/SVG/Phone.svg";
 
 const Hero: FC = () => {
+  const heroRef = useRef<HTMLElement>(null);
+  const [heroAnimated, setHeroAnimated] = useState(false);
+  const hasAnimated = useRef(false);
+
+  // Run animation when hero is in view (scroll) or on mount so content always shows
+  useEffect(() => {
+    const el = heroRef.current;
+    if (!el) return;
+    const runAnimation = () => {
+      if (hasAnimated.current) return;
+      hasAnimated.current = true;
+      setHeroAnimated(true);
+    };
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) runAnimation();
+      },
+      { threshold: 0.05, rootMargin: "0px" }
+    );
+    observer.observe(el);
+    // If hero is already in view on load, run after a tick (observer may not fire immediately)
+    const t = setTimeout(runAnimation, 150);
+    return () => {
+      observer.disconnect();
+      clearTimeout(t);
+    };
+  }, []);
+
   useEffect(() => {
     const handleScroll = () => {
       const heroSection = document.getElementById("home");
@@ -28,8 +56,9 @@ const Hero: FC = () => {
 
   return (
     <section
+      ref={heroRef}
       id="home"
-      className="scroll-reveal relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-0 lg:gap-4 w-full"
+      className={`relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-center lg:justify-start gap-0 lg:gap-4 w-full ${heroAnimated ? "hero-animated" : ""}`}
       style={{ backgroundColor: "#0a202d", marginTop: "70px" }}
     >
       {/* Column 1 on desktop (visual); on mobile shown below text (order-2), flex-none so no gap */}
@@ -37,18 +66,40 @@ const Hero: FC = () => {
         {/* Mobile + tablet: phone + house (tablet gets scaled sizing so it doesn't break) */}
         <div className="flex w-full items-center justify-center lg:hidden px-0 flex-none">
           <div className="hero-mobile-img hero-phone-house relative w-[95vw] max-w-[580px] aspect-[697.74/697.74] max-h-[min(55vh,520px)]">
-            <img
-              src={phoneSvg}
-              alt=""
-              className="absolute inset-0 w-full h-full object-contain object-bottom z-0"
-            />
-            <img
-              src={houseSvg}
-              alt=""
-              className="absolute inset-0 w-full h-full object-contain z-10"
-              style={{ objectPosition: "120% 100%" }}
-            />
+            <div className="hero-phone-wrap absolute inset-0 z-0">
+              <img
+                src={phoneSvg}
+                alt=""
+                className="w-full h-full object-contain object-bottom"
+              />
+            </div>
+            <div className="hero-house-wrap absolute inset-0 z-10">
+              <img
+                src={houseSvg}
+                alt=""
+                className="w-full h-full object-contain"
+                style={{ objectPosition: "120% 100%" }}
+              />
+            </div>
           </div>
+          <style>{`
+            @keyframes heroPhoneIn {
+              from { opacity: 0; transform: translateY(40px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes heroHouseIn {
+              from { opacity: 0; transform: translateX(-56px); }
+              to { opacity: 1; transform: translateX(0); }
+            }
+            .hero-phone-wrap { opacity: 0; transform: translateY(40px); }
+            .hero-house-wrap { opacity: 0; transform: translateX(-56px); }
+            .hero-animated .hero-phone-wrap {
+              animation: heroPhoneIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+            .hero-animated .hero-house-wrap {
+              animation: heroHouseIn 1s 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+          `}</style>
           <style>{`
             @media (max-width: 767px) {
               .hero-mobile-img.hero-phone-house {
@@ -87,17 +138,21 @@ const Hero: FC = () => {
               className="hero-desktop-phone-house relative w-full max-w-[min(85vh,920px)] min-w-[280px] h-[min(85vh,920px)] min-h-[360px] max-h-[85vh]"
               style={{ aspectRatio: "1" }}
             >
-              <img
-                src={phoneSvg}
-                alt=""
-                className="absolute inset-0 w-full h-full object-contain object-bottom z-0"
-              />
-              <img
-                src={houseSvg}
-                alt=""
-                className="absolute inset-0 w-full h-full object-contain z-10"
-                style={{ objectPosition: "120% 100%" }}
-              />
+              <div className="hero-phone-wrap absolute inset-0 z-0">
+                <img
+                  src={phoneSvg}
+                  alt=""
+                  className="w-full h-full object-contain object-bottom"
+                />
+              </div>
+              <div className="hero-house-wrap absolute inset-0 z-10">
+                <img
+                  src={houseSvg}
+                  alt=""
+                  className="w-full h-full object-contain"
+                  style={{ objectPosition: "120% 100%" }}
+                />
+              </div>
             </div>
           </div>
         </div>
