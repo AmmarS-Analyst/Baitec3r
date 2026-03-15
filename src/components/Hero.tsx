@@ -94,10 +94,10 @@ const Hero: FC = () => {
             .hero-phone-wrap { opacity: 0; transform: translateY(40px); }
             .hero-house-wrap { opacity: 0; transform: translateX(-56px); }
             .hero-animated .hero-phone-wrap {
-              animation: heroPhoneIn 1.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+              animation: heroPhoneIn 1.35s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             }
             .hero-animated .hero-house-wrap {
-              animation: heroHouseIn 1s 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+              animation: heroHouseIn 1.2s 0.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             }
           `}</style>
           <style>{`
@@ -123,9 +123,9 @@ const Hero: FC = () => {
 
         {/* Desktop: phone + house grouped (same structure as mobile so it always shows) */}
         <div className="hidden lg:flex relative flex-1 min-h-0 items-end justify-center overflow-visible w-full">
-          {/* Gradient: same height band as phone */}
+          {/* Gradient: same height band as phone — fades in from left on scroll */}
           <div
-            className="absolute right-0 pointer-events-none z-[1]"
+            className="hero-gradient-wrap absolute right-0 pointer-events-none z-[1]"
             style={{
               left: "58%",
               top: "3%",
@@ -135,6 +135,16 @@ const Hero: FC = () => {
               filter: "blur(6px)",
             }}
           />
+          <style>{`
+            @keyframes heroGradientIn {
+              from { opacity: 0; transform: translateX(-32px); }
+              to { opacity: 1; transform: translateX(0); }
+            }
+            .hero-gradient-wrap { opacity: 0; transform: translateX(-32px); }
+            .hero-animated .hero-gradient-wrap {
+              animation: heroGradientIn 1s 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            }
+          `}</style>
           <div className="relative flex items-end justify-center overflow-visible z-[2] w-full h-full min-h-[min(70vh,800px)] min-w-0">
             <div
               className="hero-desktop-phone-house relative w-full max-w-[min(85vh,920px)] min-w-[280px] h-[min(85vh,920px)] min-h-[360px] max-h-[85vh]"
@@ -162,13 +172,33 @@ const Hero: FC = () => {
 
       {/* Column 2 on desktop (text); on mobile text above visual (order-1), less top gap on mob */}
       <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-start lg:justify-center pt-6 lg:pt-0 text-center lg:text-left">
-        {/* Text block: fade in from top on scroll (like coming from under header) */}
-        <div className="hero-text-reveal w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none hero-text-block">
+        {/* Text block: headline from top, then sub appears (one by one) */}
+        <div className="w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none hero-text-block">
           <style>{`
             .hero-text-block { background: transparent; }
             @media (max-width: 767px) { .hero-text-block { padding-top: 0.25rem !important; padding-bottom: 0.25rem !important; } }
-            .hero-text-reveal { opacity: 0; transform: translateY(-24px); transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
-            .hero-animated .hero-text-reveal { opacity: 1; transform: translateY(0); }
+            @keyframes heroHeadlineIn {
+              from { opacity: 0; transform: translateY(-24px); }
+              to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes heroSubIn {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+            .hero-headline-line { opacity: 0; transform: translateY(-24px); display: block; }
+            .hero-sub-reveal { opacity: 0; }
+            .hero-animated .hero-headline-line.hero-line-1 {
+              animation: heroHeadlineIn 0.8s 1.55s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            }
+            .hero-animated .hero-headline-line.hero-line-2 {
+              animation: heroHeadlineIn 0.8s 1.85s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            }
+            .hero-animated .hero-headline-line.hero-line-3 {
+              animation: heroHeadlineIn 0.8s 2.15s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            }
+            .hero-animated .hero-sub-reveal {
+              animation: heroSubIn 0.7s 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            }
           `}</style>
           <h1
             className="font-bold uppercase leading-tight text-[#84DADE] max-w-xl"
@@ -178,14 +208,12 @@ const Hero: FC = () => {
               letterSpacing: "-0.02em",
             }}
           >
-            SMARTER{"\u00A0"}PROPERTY
-            <br />
-            MANAGEMENT,
-            <br />
-            ALL IN ONE PLACE
+            <span className="hero-headline-line hero-line-1">SMARTER{"\u00A0"}PROPERTY</span>
+            <span className="hero-headline-line hero-line-2">MANAGEMENT,</span>
+            <span className="hero-headline-line hero-line-3">ALL IN ONE PLACE</span>
           </h1>
           <p
-            className="font-normal max-w-xl text-white"
+            className="hero-sub-reveal font-normal max-w-xl text-white"
             style={{
               fontSize: "clamp(0.9375rem, 2vw, 1.25rem)",
               lineHeight: 1.6,

@@ -25,32 +25,26 @@ const NewFeatured: FC = () => {
             return (
             <div
               key={idx}
-              className={`rounded-2xl h-full cursor-pointer transition-all duration-1000 ${delayClass}`}
-              style={{ background: "#002B49", padding: "clamp(36px, 4vw, 56px) clamp(28px, 3vw, 44px)", borderRadius: "20px" }}
-              onMouseEnter={(e) => {
-                const el = e.currentTarget;
-                el.style.background = `linear-gradient(${feature.gradientDirection}, #FFFFFF 0%, #84DADE 100%)`;
-                el.querySelectorAll<HTMLElement>(".card-title, .card-desc").forEach(t => { t.style.color = "#002B49"; t.style.transform = "translateY(-2px)"; });
-                const icon = el.querySelector<HTMLElement>(".icon-img");
-                if (icon) { icon.style.filter = "drop-shadow(0 0 20px rgba(255, 68, 56, 1.2))"; icon.style.transform = "scale(1.1)"; }
-              }}
-              onMouseLeave={(e) => {
-                const el = e.currentTarget;
-                el.style.background = "#002B49";
-                el.querySelectorAll<HTMLElement>(".card-title, .card-desc").forEach(t => { t.style.color = "#FFFFFF"; t.style.transform = "translateY(0)"; });
-                const icon = el.querySelector<HTMLElement>(".icon-img");
-                if (icon) { icon.style.filter = "none"; icon.style.transform = "scale(1)"; }
-              }}
+              className={`group/card relative h-full cursor-pointer overflow-hidden ${delayClass}`}
+              style={{ background: "#002B49", padding: "clamp(36px, 4vw, 56px) clamp(28px, 3vw, 44px)", borderRadius: "20px", isolation: "isolate" }}
             >
-              <div className="flex items-center justify-center mb-8" style={{ width: "76px", height: "76px", borderRadius: "50%" }}>
-                <img src={`/assets/images/icons/${feature.icon}`} alt={feature.title} className="icon-img transition-all duration-1000" style={{ width: "60px", height: "60px", objectFit: "contain" }} />
+              {/* Gradient overlay - extends out so anti-aliased edge is clipped away, no dark seam */}
+              <div
+                className="absolute -inset-[3px] opacity-0 group-hover/card:opacity-100 transition-opacity duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
+                style={{ background: `linear-gradient(${feature.gradientDirection}, #FFFFFF 0%, #84DADE 100%)`, borderRadius: "23px" }}
+                aria-hidden
+              />
+              <div className="relative z-10">
+                <div className="flex items-center justify-center mb-8" style={{ width: "76px", height: "76px", borderRadius: "50%" }}>
+                  <img src={`/assets/images/icons/${feature.icon}`} alt={feature.title} className="icon-img w-[60px] h-[60px] object-contain transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] group-hover/card:scale-110 group-hover/card:drop-shadow-[0_0_20px_rgba(255,68,56,1)]" />
+                </div>
+                <h4 className="card-title mb-7 transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] text-white group-hover/card:text-[#002B49] group-hover/card:-translate-y-0.5" style={{ fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 700, marginBottom: "1rem" }}>
+                  {feature.title}
+                </h4>
+                <p className="card-desc font-medium transition-all duration-1000 ease-[cubic-bezier(0.22,0.61,0.36,1)] text-white/90 group-hover/card:text-[#002B49]" style={{ fontSize: "16px", lineHeight: 1.5 }}>
+                  {feature.desc}
+                </p>
               </div>
-              <h4 className="card-title mb-7 transition-all duration-1000" style={{ fontSize: "clamp(18px, 2.5vw, 22px)", fontWeight: 700, color: "#FFFFFF", marginBottom: "1rem" }}>
-                {feature.title}
-              </h4>
-              <p className="card-desc font-medium transition-all duration-1000" style={{ fontSize: "16px", color: "#FFFFFF", lineHeight: 1.5, opacity: 0.9 }}>
-                {feature.desc}
-              </p>
             </div>
           )})}
         </div>
