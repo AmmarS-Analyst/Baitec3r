@@ -1,4 +1,4 @@
-import { useState, useRef, type FC } from "react";
+import { useState, useRef, useEffect, type FC } from "react";
 
 const steps = [
   { title: "Sign up", description: "Create your account in minutes and securely access your property management dashboard." },
@@ -16,34 +16,89 @@ const stepImages = [
   "/assets/images/how_it_works2/handle_maintainenece.svg",
 ];
 
+const SLIDE_DURATION_MS = 550;
+const TRACK_TRANSITION = "transform 0.55s cubic-bezier(0.32, 0.72, 0, 1)";
+const N = steps.length;
+
+// Infinite loop track: [clone last, 0, 1, 2, 3, 4, clone first] (indices 0..6; real steps at 1..5)
+const loopImages = [
+  stepImages[N - 1],
+  ...stepImages,
+  stepImages[0],
+];
+const loopAlts = [steps[N - 1].title, ...steps.map((s) => s.title), steps[0].title];
+
 const HowItWorks: FC = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [trackIndex, setTrackIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const contentBoxRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const swipeStartXRef = useRef<number | null>(null);
   const swipeLastXRef = useRef<number | null>(null);
+  const snapTimeoutRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (snapTimeoutRef.current != null) clearTimeout(snapTimeoutRef.current);
+    };
+  }, []);
 
   const handleStepChange = (step: number) => {
     if (step === activeStep || isTransitioning) return;
-    setIsTransitioning(true);
+
+    const fromEndToStart = activeStep === N - 1 && step === 0;
+    const fromStartToEnd = activeStep === 0 && step === N - 1;
+
     if (contentBoxRef.current) {
-      contentBoxRef.current.style.transition = "opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+      contentBoxRef.current.style.transition = "opacity 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
       contentBoxRef.current.style.opacity = "0";
     }
-    setTimeout(() => {
+
+    if (fromEndToStart) {
+      setIsTransitioning(true);
+      setActiveStep(0);
+      setTrackIndex(6);
+      snapTimeoutRef.current = window.setTimeout(() => {
+        if (trackRef.current) trackRef.current.style.transition = "none";
+        setTrackIndex(1);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (trackRef.current) trackRef.current.style.transition = TRACK_TRANSITION;
+            setIsTransitioning(false);
+          });
+        });
+      }, SLIDE_DURATION_MS);
+    } else if (fromStartToEnd) {
+      setIsTransitioning(true);
+      setActiveStep(N - 1);
+      setTrackIndex(0);
+      snapTimeoutRef.current = window.setTimeout(() => {
+        if (trackRef.current) trackRef.current.style.transition = "none";
+        setTrackIndex(5);
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            if (trackRef.current) trackRef.current.style.transition = TRACK_TRANSITION;
+            setIsTransitioning(false);
+          });
+        });
+      }, SLIDE_DURATION_MS);
+    } else {
       setActiveStep(step);
-      setTimeout(() => {
-        setIsTransitioning(false);
-        if (contentBoxRef.current) {
-          contentBoxRef.current.style.transition = "none";
-          contentBoxRef.current.style.opacity = "";
-        }
-      }, 50);
-    }, 300);
+      setTrackIndex(step + 1);
+    }
+
+    const t = setTimeout(() => {
+      if (contentBoxRef.current) {
+        contentBoxRef.current.style.transition = "opacity 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94)";
+        contentBoxRef.current.style.opacity = "1";
+      }
+    }, 350);
+    return () => clearTimeout(t);
   };
 
-  const goNext = () => handleStepChange(activeStep === steps.length - 1 ? 0 : activeStep + 1);
-  const goPrev = () => handleStepChange(activeStep === 0 ? steps.length - 1 : activeStep - 1);
+  const goNext = () => handleStepChange(activeStep === N - 1 ? 0 : activeStep + 1);
+  const goPrev = () => handleStepChange(activeStep === 0 ? N - 1 : activeStep - 1);
 
   const handleTouchStart: React.TouchEventHandler<HTMLDivElement> = (e) => {
     swipeStartXRef.current = e.touches[0]?.clientX ?? null;
@@ -167,21 +222,52 @@ const HowItWorks: FC = () => {
                 alt="Setup Bars"
                 className="hiw2-setup-bars absolute pointer-events-none"
               />
-              {/* Mobile image: pushed more right */}
-              <div className="hiw2-phone-wrap relative z-[3] flex justify-end items-end overflow-visible" style={{ height: "clamp(26rem, 46vw, 41rem)", paddingRight: "0rem" }}>
-                <img
-                  src={stepImages[activeStep]}
-                  alt={steps[activeStep].title}
-                  className="transition-all duration-300 hiw-phone-img"
+              {/* Mobile: viewport with sliding screen carousel + subtle phone motion */}
+              <div
+                className="hiw2-phone-wrap relative z-[3] flex justify-end items-end"
+                style={{
+                  height: "clamp(26rem, 46vw, 41rem)",
+                  paddingRight: "0rem",
+                }}
+              >
+                <div
+                  className="hiw2-phone-viewport"
                   style={{
-                    width: "clamp(21em, 31vw, 28em)", height: "auto", maxHeight: "168%", objectFit: "contain",
-                    opacity: isTransitioning ? 0 : 1, transform: isTransitioning ? "translate(2.75rem, -2rem) scale(0.98)" : "translate(2.75rem, -4.25rem) scale(1)",
+                    width: "clamp(21em, 31vw, 28em)",
+                    transform: "translate(2.75rem, -4.25rem)",
+                    transition: "transform 0.5s cubic-bezier(0.32, 0.72, 0, 1)",
                   }}
-                />
+                >
+                  <div
+                    ref={trackRef}
+                    className="hiw2-phone-screen-track"
+                    style={{
+                      transform: `translateX(-${trackIndex * (100 / 7)}%)`,
+                      transition: TRACK_TRANSITION,
+                    }}
+                  >
+                    {loopImages.map((src, i) => (
+                      <div key={i} className="hiw2-phone-screen-slide">
+                        <img
+                          src={src}
+                          alt={loopAlts[i]}
+                          className="hiw-phone-img"
+                          style={{
+                            width: "100%",
+                            height: "auto",
+                            maxHeight: "168%",
+                            objectFit: "contain",
+                            display: "block",
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
               {/* Shadow under phone */}
               <div className="absolute bottom-0 left-0 right-0 overflow-visible pointer-events-none" style={{ height: "8.5rem", zIndex: 2 }}>
-                <img src="/assets/images/hero/shadow_1.svg" alt="Shadow" className="absolute pointer-events-none" style={{ bottom: "2.2rem", left: "90%", transform: "translateX(-50%) rotate(-6deg)", width: "clamp(30em, 50vw, 40em)", height: "auto", opacity: isTransitioning ? 0 : 0.78 }} />
+                <img src="/assets/images/hero/shadow_1.svg" alt="Shadow" className="absolute pointer-events-none hiw2-phone-shadow" style={{ bottom: "2.2rem", left: "90%", transform: "translateX(-50%) rotate(-6deg)", width: "clamp(30em, 50vw, 40em)", height: "auto", opacity: 0.78 }} />
               </div>
             </div>
           </div>
@@ -262,6 +348,22 @@ const HowItWorks: FC = () => {
           transform: translateY(20px);
           transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
           transition-delay: 0.82s;
+        }
+        /* Sliding phone screens: viewport clips, track slides horizontally */
+        .hiw2-phone-viewport {
+          overflow: hidden;
+          flex-shrink: 0;
+        }
+        .hiw2-phone-screen-track {
+          display: flex;
+          flex-direction: row;
+          width: 700%;
+          will-change: transform;
+        }
+        .hiw2-phone-screen-slide {
+          flex: 0 0 14.2857%;
+          min-width: 14.2857%;
+          box-sizing: border-box;
         }
         .scroll-reveal--visible .hiw2-setup-bars {
           opacity: 1;
@@ -363,10 +465,10 @@ const HowItWorks: FC = () => {
             align-items: flex-start !important;
             height: clamp(22rem, 52vw, 30rem) !important;
           }
-          .hiw2-phone-wrap > img {
+          .hiw2-phone-wrap .hiw2-phone-viewport {
             max-width: 330px;
             width: 100%;
-            transform: translate(0rem, -1.5rem) !important;
+            transform: translate(0, -1.5rem) !important;
           }
 
           .hiw2-content-column > div:first-of-type { width: 85%; max-width: 400px; margin-left: auto; margin-right: auto; padding: 1.5rem 1.25rem; }
@@ -400,7 +502,7 @@ const HowItWorks: FC = () => {
         @media (max-width: 480px) {
           .hiw2-mobile-column { margin-top: 0; margin-bottom: 0; }
           .hiw2-phone-wrap { height: clamp(20rem, 62vw, 26rem) !important; }
-          .hiw2-phone-wrap > img { max-width: 280px; transform: translate(0rem, -1.15rem) !important; }
+          .hiw2-phone-wrap .hiw2-phone-viewport { max-width: 280px; transform: translate(0, -1.15rem) !important; }
           .hiw2-setup-bars { height: clamp(22em, 64vw, 30em); }
           .hiw2-content-column > div:first-of-type { padding: 1.25rem 1rem; width: 90%; max-width: 350px; }
           .hiw2-content-column > div:first-of-type > h3 { font-size: 22px; min-height: 3.1rem; }

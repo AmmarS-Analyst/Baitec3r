@@ -16,12 +16,12 @@ const Footer: FC = () => {
               {/* Column 1 - Logo and Contact */}
               <div>
                 <a href="#home" style={{ marginBottom: "1.5rem", display: "inline-block" }}>
-                  <img src="/assets/images/logo/Logo.svg" alt="Baitech Logo" style={{ height: "60px", width: "auto" }} />
+                  <img src="/assets/images/logo/Logo.svg" alt="Baitech Logo" style={{ height: "76px", width: "auto" }} />
                 </a>
-                <p className="max-w-[250px] mb-6" style={{ fontSize: "clamp(14px, 2vw, 18px)", color: "#002B49", opacity: 0.8 }}>
+                <p className="max-w-[210px] mb-2" style={{ fontSize: "clamp(14px, 2vw, 18px)", color: "#002B49", opacity: 0.8 }}>
                   AI-first property management built in Bahrain for the GCC
                 </p>
-                <div className="flex flex-col gap-4 mt-6">
+                <div className="flex flex-col gap-4 mt-2">
                   <div className="flex items-center gap-3">
                     <span className="w-10 h-10 rounded-full flex items-center justify-center" style={{ background: "linear-gradient(135deg, #1ECAD3 0%, #0099A8 100%)" }}>
                       <i className="ph-bold ph-phone" style={{ fontSize: "clamp(16px, 2.5vw, 20px)", color: "#FFFFFF" }} />
@@ -51,6 +51,7 @@ const Footer: FC = () => {
                     { label: "Features", href: "#newfeatured" },
                     { label: "How It Works", href: "#how-it-works" },
                     { label: "FAQ", href: "#faq" },
+                    { label: "Contact", href: "#contact" },
                   ].map((link) => (
                     <li key={link.href}>
                       <a
@@ -78,42 +79,14 @@ const Footer: FC = () => {
                 <div style={{ width: "2px", height: "100%", background: "linear-gradient(180deg, #84DADE 0%, #1ECAD3 50%, #0099A8 100%)" }} />
               </div>
 
-              {/* Column 3 - Newsletter */}
-              <div style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between" }}>
-                <div>
-                  <h5 className="uppercase font-bold mb-8" style={{ color: "#002B49", fontSize: "clamp(14px, 2vw, 18px)", letterSpacing: "1px" }}>
-                    Newsletter
-                  </h5>
-                  <form
-                    action="#"
-                    style={{ position: "relative", boxShadow: "0 4px 12px rgba(30, 202, 211, 0.2)", borderRadius: "50px", marginBottom: "2rem" }}
-                  >
-                    <input
-                      type="email"
-                      placeholder="Enter your e-mail"
-                      className="w-full bg-white outline-none"
-                      style={{ padding: "16px 56px 16px 48px", border: "2px solid #84DADE", borderRadius: "50px", fontSize: "15px" }}
-                    />
-                    <span className="absolute flex items-center justify-center" style={{ left: "20px", top: "50%", transform: "translateY(-50%)", fontSize: "clamp(16px, 2.5vw, 20px)", color: "#1ECAD3" }}>
-                      <i className="ph-bold ph-envelope-simple" />
-                    </span>
-                    <button
-                      type="button"
-                      className="absolute flex items-center justify-center border-none rounded-full cursor-pointer transition-all duration-300"
-                      style={{ right: "8px", top: "50%", transform: "translateY(-50%)", width: "44px", height: "44px", background: "linear-gradient(135deg, #1ECAD3 0%, #0099A8 100%)", fontSize: "clamp(16px, 2.5vw, 20px)", color: "#FFFFFF" }}
-                      onMouseEnter={(e) => { e.currentTarget.style.background = "linear-gradient(135deg, #FF4438 0%, #FF6B5E 100%)"; e.currentTarget.style.transform = "translateY(-50%) scale(1.1)"; }}
-                      onMouseLeave={(e) => { e.currentTarget.style.background = "linear-gradient(135deg, #1ECAD3 0%, #0099A8 100%)"; e.currentTarget.style.transform = "translateY(-50%) scale(1)"; }}
-                    >
-                      <i className="ph-bold ph-arrow-up-right" />
-                    </button>
-                  </form>
-                </div>
+              {/* Column 3 - Terms only (no newsletter) */}
+              <div style={{ display: "flex", flexDirection: "column", height: "100%", justifyContent: "center" }}>
                 {/* Terms Links */}
-                <div className="footer-terms-links flex items-center gap-2" style={{ marginTop: "auto" }}>
+                <div className="footer-terms-links flex items-center gap-2">
                   <a
                     href="/terms-and-conditions"
                     className="no-underline font-semibold transition-colors duration-300"
-                    style={{ color: "#1ECAD3", fontSize: "clamp(12px, 1.2vw, 14px)" }}
+                    style={{ color: "#1ECAD3", fontSize: "clamp(14px, 1.4vw, 16px)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.color = "#FF4438"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.color = "#1ECAD3"; }}
                   >
@@ -123,7 +96,7 @@ const Footer: FC = () => {
                   <a
                     href="/privacy-policy"
                     className="no-underline font-semibold transition-colors duration-300"
-                    style={{ color: "#1ECAD3", fontSize: "clamp(12px, 1.2vw, 14px)" }}
+                    style={{ color: "#1ECAD3", fontSize: "clamp(14px, 1.4vw, 16px)" }}
                     onMouseEnter={(e) => { e.currentTarget.style.color = "#FF4438"; }}
                     onMouseLeave={(e) => { e.currentTarget.style.color = "#1ECAD3"; }}
                   >
@@ -164,6 +137,9 @@ const Footer: FC = () => {
 
       <style>{`
         @media (max-width: 1024px) {
+          .footer-five { background: #E9F6FB; }
+          .footer-five > div > div { padding-top: 40px !important; }
+          .footer-main-content { border-top: none !important; border-bottom: none !important; padding: 40px 0 !important; }
           .footer-five .footer-bottom-section { border-top: none !important; }
           .footer-divider { display: none !important; }
           .footer-main-content { justify-content: center !important; align-items: center !important; text-align: center !important; }
