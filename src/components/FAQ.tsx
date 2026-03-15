@@ -23,9 +23,31 @@ const FAQ: FC = () => {
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto scroll-reveal-item scroll-reveal-item--d2">
+        <div className="max-w-3xl mx-auto">
+          <style>{`
+            #faq .faq-item {
+              opacity: 0;
+              transform: translateY(28px);
+              transition: opacity 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                          transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                          box-shadow 0.3s ease;
+            }
+            #faq.scroll-reveal--visible .faq-item {
+              opacity: 1;
+              transform: translateY(0);
+            }
+            /* style is 1st child, so .faq-item are nth-child(2)..nth-child(9) */
+            #faq.scroll-reveal--visible .faq-item:nth-child(2) { transition-delay: 0.2s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(3) { transition-delay: 0.45s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(4) { transition-delay: 0.7s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(5) { transition-delay: 0.95s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(6) { transition-delay: 1.2s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(7) { transition-delay: 1.45s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(8) { transition-delay: 1.7s; }
+            #faq.scroll-reveal--visible .faq-item:nth-child(9) { transition-delay: 1.95s; }
+          `}</style>
           {faqs.map((faq, index) => (
-            <div key={index} className="mb-3">
+            <div key={index} className="faq-item mb-3">
               <div
                 className="rounded-xl overflow-hidden transition-shadow duration-300"
                 style={{ background: "#FFFFFF", border: "1px solid #E9ECEF" }}
