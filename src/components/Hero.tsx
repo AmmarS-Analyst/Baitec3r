@@ -137,12 +137,19 @@ const Hero: FC = () => {
           />
           <style>{`
             @keyframes heroGradientIn {
-              from { opacity: 0; transform: translateX(-32px); }
-              to { opacity: 1; transform: translateX(0); }
+              from {
+                opacity: 0;
+                transform: translateX(-80px);
+              }
+              to {
+                opacity: 1;
+                transform: translateX(0);
+              }
             }
             .hero-gradient-wrap { opacity: 0; transform: translateX(-32px); }
             .hero-animated .hero-gradient-wrap {
-              animation: heroGradientIn 1s 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+              /* Slightly after phone (1.35s) and house (0.85s + 1.2s = 2.05s) complete */
+              animation: heroGradientIn 1s 1.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
             }
           `}</style>
           <div className="relative flex items-end justify-center overflow-visible z-[2] w-full h-full min-h-[min(70vh,800px)] min-w-0">
