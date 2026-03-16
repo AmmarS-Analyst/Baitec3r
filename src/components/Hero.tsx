@@ -61,8 +61,8 @@ const Hero: FC = () => {
       className={`relative overflow-visible min-h-[calc(100vh-70px)] max-h-[930px] flex flex-col lg:flex-row items-stretch justify-start lg:justify-start gap-0 lg:gap-4 w-full pt-4 lg:pt-0 ${heroAnimated ? "hero-animated" : ""}`}
       style={{ backgroundColor: "#0a202d", marginTop: "70px" }}
     >
-      {/* Column 1 on desktop (visual); on mobile shown below text (order-2), flex-none so no gap */}
-      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 flex items-center justify-center lg:justify-end order-2 lg:order-1">
+      {/* Column 1 on desktop (visual); on mobile shown below text (order-2), add even more top gap on mobile */}
+      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 flex items-center justify-center lg:justify-end order-2 lg:order-1 mt-20 lg:mt-0">
         {/* Mobile + tablet: phone + house (tablet gets scaled sizing so it doesn't break) */}
         <div className="flex w-full items-center justify-center lg:hidden px-0 flex-none">
           <div className="hero-mobile-img hero-phone-house relative w-[95vw] max-w-[580px] aspect-[697.74/697.74] max-h-[min(55vh,520px)]">
@@ -170,8 +170,8 @@ const Hero: FC = () => {
         </div>
       </div>
 
-      {/* Column 2 on desktop (text); on mobile text above visual (order-1), less top gap on mob */}
-      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-start lg:justify-center pt-6 lg:pt-0 text-center lg:text-left">
+      {/* Column 2 on desktop (text); on mobile text above visual (order-1), add more top margin on mob */}
+      <div className="relative flex flex-none lg:flex-1 min-w-0 w-full lg:w-1/2 order-1 lg:order-2 flex flex-col items-center lg:items-start justify-start lg:justify-center mt-8 lg:mt-0 pt-6 lg:pt-0 text-center lg:text-left">
         {/* Text block: headline from top, then sub appears (one by one) */}
         <div className="w-full flex flex-col items-center lg:items-start justify-center gap-4 lg:gap-6 px-4 py-1 lg:py-0 lg:px-6 rounded-none hero-text-block">
           <style>{`
